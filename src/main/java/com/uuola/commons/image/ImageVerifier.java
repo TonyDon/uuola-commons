@@ -116,7 +116,7 @@ public class ImageVerifier {
             int xe = w-xb;
             int yb = (h-pixSize)>>1;
             int ye = h-yb;
-            int actualCircleTimes = (int)(pixNum>>2);
+            int actualCircleTimes = (pixNum>>2);
             if (bMixcolr) {
                 for (int k = 1; k <= actualCircleTimes; k++) {
                     g2d.setColor(fontColr[genInt(0, fontColr.length)]);

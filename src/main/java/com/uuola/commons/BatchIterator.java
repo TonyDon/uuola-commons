@@ -42,7 +42,7 @@ public class BatchIterator<E> implements Iterator<List<E>> {
             throw new RuntimeException(
                     "Please do not be set less than or equal to '0' for GenericBatchIterator's batchSize !");
         }
-        int times = (int) (expectBatchSize / CYCLE_TAKE_NUM);
+        int times = (expectBatchSize / CYCLE_TAKE_NUM);
         this.srcList = srcList;
         this.batchSize = ((expectBatchSize % CYCLE_TAKE_NUM == 0) ? times : times + 1) * CYCLE_TAKE_NUM;
         this.size = null == srcList ? 0 : srcList.size();
