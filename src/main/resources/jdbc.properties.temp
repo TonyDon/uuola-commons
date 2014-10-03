@@ -1,0 +1,68 @@
+jdbc.datasource.name_list = 
+
+#default datasource name, don't set [jdbc.datasource.name_list].
+# password if hash encrypt, prefix is 'enc_' . etc, enc_8671bf3886143f69
+driver_class=com.mysql.jdbc.Driver
+connection_url=jdbc:mysql://127.0.0.1:3306/txcms?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=UTF8&amp;rewriteBatchedStatements=true
+username=root
+password=root
+min_size=2
+min_idle=2
+max_wait=20000
+max_active=5
+test_on_borrow=false
+test_while_idle = true
+test_on_return = false
+validation_query=select 1
+validation_interval=30000
+remove_abandoned=true
+remove_abandoned_timeout=60
+log_abandoned=false
+timeBetweenEvictionRunsMillis=20000
+minEvictableIdleTimeMillis=60000
+jdbc_interceptors=org.apache.tomcat.jdbc.pool.interceptor.ConnectionState;org.apache.tomcat.jdbc.pool.interceptor.StatementFinalizer
+
+#txcms
+txweb_db.driver_class=com.mysql.jdbc.Driver
+txweb_db.connection_url=jdbc:mysql://127.0.0.1:3306/txcms?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=UTF8&amp;rewriteBatchedStatements=true
+txweb_db.username=root
+txweb_db.password=root
+txweb_db.min_size=2
+txweb_db.min_idle=2
+txweb_db.max_wait=20000
+txweb_db.max_idle=6
+txweb_db.max_active=6
+txweb_db.test_on_borrow=false
+txweb_db.test_while_idle = true
+txweb_db.test_on_return =false
+txweb_db.validation_query=select 1
+txweb_db.validation_interval=30000
+txweb_db.remove_abandoned=true
+txweb_db.remove_abandoned_timeout=60
+txweb_db.log_abandoned=false
+txweb_db.timeBetweenEvictionRunsMillis=20000
+txweb_db.minEvictableIdleTimeMillis=60000
+txweb_db.jdbc_interceptors=org.apache.tomcat.jdbc.pool.interceptor.ConnectionState;org.apache.tomcat.jdbc.pool.interceptor.StatementFinalizer
+
+
+#365dc_base_data
+dcbase_db.driver_class=com.mysql.jdbc.Driver
+dcbase_db.connection_url=jdbc:mysql://127.0.0.1:3306/365dc_base_data?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=UTF8&amp;rewriteBatchedStatements=true
+dcbase_db.username=root
+dcbase_db.password=root
+dcbase_db.min_size=2
+dcbase_db.max_idle=10
+dcbase_db.min_idle=2
+dcbase_db.max_wait=20000
+dcbase_db.max_active=6
+dcbase_db.test_on_borrow=false
+dcbase_db.test_while_idle =true
+dcbase_db.test_on_return =false
+dcbase_db.validation_query=select 1
+dcbase_db.validation_interval=30000
+dcbase_db.remove_abandoned=true
+dcbase_db.remove_abandoned_timeout=60
+dcbase_db.log_abandoned=false
+dcbase_db.timeBetweenEvictionRunsMillis=20000
+dcbase_db.minEvictableIdleTimeMillis=60000
+dcbase_db.jdbc_interceptors=org.apache.tomcat.jdbc.pool.interceptor.ConnectionState;org.apache.tomcat.jdbc.pool.interceptor.StatementFinalizer
