@@ -148,7 +148,7 @@ public class ImageUtil {
      */
     private static void jpegHandle(BufferedImage image, File distImg) throws Exception{
             Iterator<ImageWriter> iter = ImageIO.getImageWritersByFormatName("jpeg");
-            ImageWriter writer = (ImageWriter) iter.next();
+            ImageWriter writer = iter.next();
             ImageOutputStream ios = ImageIO.createImageOutputStream(distImg);
             writer.setOutput(ios);
             //ImageWriteParam iwparam = new JPEGImageWriteParam(Locale.getDefault());
