@@ -228,12 +228,12 @@ public class StringUtil {
         StringBuilder result = new StringBuilder();
         boolean nextIsUpper = false;
         int len = name.length();
-        if (len > 1 && name.substring(1, 2).equals(CST_CHAR.STR_UNDER_LINE)) {
-            result.append(name.substring(0, 1).toUpperCase());
-        } else {
-            result.append(name.substring(0, 1).toLowerCase());
-        }
-        for (int i = 1; i < len; i++) {
+//        if (len > 1 && name.substring(1, 2).equals(CST_CHAR.STR_UNDER_LINE)) {
+//            result.append(name.substring(0, 1).toUpperCase());
+//        } else {
+//            result.append(name.substring(0, 1).toLowerCase());
+//        }
+        for (int i = 0; i < len; i++) {
             String s = name.substring(i, i + 1);
             if (s.equals(CST_CHAR.STR_UNDER_LINE)) {
                 nextIsUpper = true;
