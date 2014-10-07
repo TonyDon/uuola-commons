@@ -1,9 +1,7 @@
 package com.uuola.txcms.util.test;
 
 import com.uuola.commons.coder.DES;
-import com.uuola.commons.coder.DESede;
 import com.uuola.commons.coder.Md5;
-import com.uuola.commons.coder.MyBase64;
 
 
 public class CodeTest {

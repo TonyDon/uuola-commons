@@ -44,12 +44,14 @@ public class ImageTest {
     }
     
     
+    @SuppressWarnings("unused")
     private static void test4(){
         ImageUtil.resize(new File("f:/temp/f.jpg"), 
                 new File("f:/temp/f_s1.jpg"),
                 200, 0, false);
     }
     
+    @SuppressWarnings("unused")
     private static void test3(){
         Font f = new Font("Tahoma", Font.BOLD, 16);
         ImageUtil.pressText(new File("f:/temp/20120921002239.jpg"), 
@@ -61,6 +63,7 @@ public class ImageTest {
         System.out.println(f.getSize());
     }
     
+    @SuppressWarnings("unused")
     private static void test2(){
         File srcFile =new File("f:/temp/T2LWTBXoJaXXXXXXXX_!!880734.jpg");
         File distFile = new File("f:/temp/T2LWTBXoJaXXXXXXXX_!!880734_c.jpg");
@@ -68,6 +71,7 @@ public class ImageTest {
         ImageUtil.cutImage(srcFile, distFile, 790, 828, 200, 200, 300, 200);
     }
     
+    @SuppressWarnings("unused")
     private static void test1() throws FileNotFoundException{
         // TODO Auto-generated method stub
          Color[] fontcolor = {

@@ -91,6 +91,7 @@ public class CollectionUtilTest {
         System.out.println("test4 end --");
     }
     
+    @SuppressWarnings("unused")
     private static void test5() {
         // TODO Auto-generated method stub
         List<Integer> numbox = new ArrayList<Integer>();
