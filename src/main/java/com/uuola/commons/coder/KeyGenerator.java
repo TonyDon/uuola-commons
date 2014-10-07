@@ -46,23 +46,35 @@ public final class KeyGenerator {
     }
 
     public static String getRndChr(int len, char[] map) {
+        int size = map.length;
+        if (1 == len) {
+            return String.valueOf(map[NumberUtil.genRndInt(0, size)]);
+        }
         StringBuilder sb = new StringBuilder(len);
-        if (0 == len % 8) {
+        if (4 == len) {
+            sb.append(map[NumberUtil.genRndInt(0, size)]);
+            sb.append(map[NumberUtil.genRndInt(0, size)]);
+            sb.append(map[NumberUtil.genRndInt(0, size)]);
+            sb.append(map[NumberUtil.genRndInt(0, size)]);
+            
+        } else if (0 == len % 8) {
             int times = len / 8;
             for (int i = 0; i < times; i++) {
-                sb.append(map[NumberUtil.genRndInt(0, map.length)]);
-                sb.append(map[NumberUtil.genRndInt(0, map.length)]);
-                sb.append(map[NumberUtil.genRndInt(0, map.length)]);
-                sb.append(map[NumberUtil.genRndInt(0, map.length)]);
-                sb.append(map[NumberUtil.genRndInt(0, map.length)]);
-                sb.append(map[NumberUtil.genRndInt(0, map.length)]);
-                sb.append(map[NumberUtil.genRndInt(0, map.length)]);
-                sb.append(map[NumberUtil.genRndInt(0, map.length)]);
+                sb.append(map[NumberUtil.genRndInt(0, size)]);
+                sb.append(map[NumberUtil.genRndInt(0, size)]);
+                sb.append(map[NumberUtil.genRndInt(0, size)]);
+                sb.append(map[NumberUtil.genRndInt(0, size)]);
+                sb.append(map[NumberUtil.genRndInt(0, size)]);
+                sb.append(map[NumberUtil.genRndInt(0, size)]);
+                sb.append(map[NumberUtil.genRndInt(0, size)]);
+                sb.append(map[NumberUtil.genRndInt(0, size)]);
             }
+            
         } else {
             for (int k = 0; k < len; k++) {
-                sb.append(map[NumberUtil.genRndInt(0, map.length)]);
+                sb.append(map[NumberUtil.genRndInt(0, size)]);
             }
+            
         }
         return sb.toString();
     }
@@ -77,8 +89,8 @@ public final class KeyGenerator {
         return getUUID(4, SHA.SHA_1);
     }
 
-    public static String getUUID(int rnd_char_num, String sha_flag) {
-        return SHA.encode(UUID.randomUUID().toString().concat(getRndChr(rnd_char_num)), sha_flag);
+    public static String getUUID(int rndCharNum, String shaflag) {
+        return SHA.encode(UUID.randomUUID().toString().concat(getRndChr(rndCharNum)), shaflag);
     }
 
     /*
@@ -111,6 +123,8 @@ public final class KeyGenerator {
     }
     
     public static void main(String... arg) throws Exception{
+        System.out.println(getRndChr(1));
+        System.out.println(getRndChr(4));
         System.out.println(getRndChr(8));
         System.out.println(getShortChar("asdfasfsdfasf"));
         System.out.println(getRndChr(8).concat(getUUID()).concat("!").concat(Long.toString(DateUtil.getCurrMsTime(),16)));

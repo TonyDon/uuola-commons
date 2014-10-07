@@ -258,4 +258,26 @@ public class StringUtil {
     public static String clearNote(String str) {
         return CST_REGEX.RE_CLR_NOTE.matcher(str).replaceAll(CST_CHAR.STR_EMPTY);
     }
+    
+    /**
+     * str  不以prefix 字符串为开始 返回true ,prefix大小写敏感<br/>
+     * 使用此方法减少‘!’非的使用
+     * @param str
+     * @param prefix
+     * @return
+     */
+    public static boolean startsNotWith(String str, String prefix){
+        return !StringUtils.startsWith(str, prefix);
+    }
+    
+    /**
+     * str  不以suffix 字符串结束, 返回true , suffix大小写敏感<br/>
+     * 使用此方法减少‘!’非的使用
+     * @param str
+     * @param suffix
+     * @return
+     */
+    public static boolean endNotWith(String str, String suffix){
+        return !StringUtils.endsWith(str, suffix);
+    }
 }
