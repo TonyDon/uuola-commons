@@ -1,6 +1,5 @@
 package com.uuola.commons.exception;
 
-import com.uuola.commons.constant.HTTP_STATUS_CODE;
 
 /**
  * 业务异常基类
@@ -10,9 +9,9 @@ public class BusinessException extends RuntimeException {
 
     private static final long serialVersionUID = 8837159417583848987L;
     /**
-     * 返回给客户端的http状态码
+     * 返回给客户端的错误码
      */
-    private int httpCode = HTTP_STATUS_CODE.SC_BZ_ERROR;
+    private int errorCode = 0;
     
     private Object[] params;
 
@@ -50,12 +49,14 @@ public class BusinessException extends RuntimeException {
         super(String.format(message, params), cause);
     }
 
-    public int getHttpCode() {
-        return httpCode;
+    
+    public int getErrorCode() {
+        return errorCode;
     }
 
-    public void setHttpCode(int httpCode) {
-        this.httpCode = httpCode;
+    
+    public void setErrorCode(int errorCode) {
+        this.errorCode = errorCode;
     }
 
     /**
