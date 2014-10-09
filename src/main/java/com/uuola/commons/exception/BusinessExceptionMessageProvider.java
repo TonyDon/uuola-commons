@@ -39,11 +39,11 @@ public class BusinessExceptionMessageProvider {
         return null;
     }
     
-    public ResourceBundle getResourceBundle(String exceptionName, Locale locale){
-        List<ResourceBundle> cachedBundles = cachedBundleMap.get(exceptionName);
+    public ResourceBundle getResourceBundle(String exceptionClassName, Locale locale){
+        List<ResourceBundle> cachedBundles = cachedBundleMap.get(exceptionClassName);
         if(cachedBundles == null){
             cachedBundles = new ArrayList<ResourceBundle>();
-            cachedBundleMap.put(exceptionName, cachedBundles);
+            cachedBundleMap.put(exceptionClassName, cachedBundles);
         }else{
             ResourceBundle bundle = getBundleFromCache(cachedBundles, locale);
             if(bundle != null){
@@ -51,7 +51,7 @@ public class BusinessExceptionMessageProvider {
             }
         }
         try {
-            ResourceBundle bundle = ResourceBundle.getBundle(BASE+exceptionName, locale);
+            ResourceBundle bundle = ResourceBundle.getBundle(BASE+exceptionClassName, locale);
             cachedBundles.add(bundle);
             return bundle;
         } catch (Exception e) {
