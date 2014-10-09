@@ -85,7 +85,13 @@ public class BusinessExceptionMessageProvider {
         } catch (Exception ex) {
             return CST_CHAR.STR_AT + key;
         }
-        return String.format(value, e.getParams());
+        if (value.contains("%s") || value.contains("%d")) {
+            value = String.format(value, e.getParams());
+        }
+        if (e.getErrorCode() != 0) {
+            value = value + " ErrorCode:" + e.getErrorCode();
+        }
+        return value;
     }
     
     /**

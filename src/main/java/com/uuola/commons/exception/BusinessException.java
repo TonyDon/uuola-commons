@@ -42,11 +42,13 @@ public class BusinessException extends RuntimeException {
      * @param params
      */
     public BusinessException(String message, Object... params) {
-        super(String.format(message, params));
+        super(message);
+        setParams(params);
     }
 
     public BusinessException(Throwable cause, String message, Object... params) {
-        super(String.format(message, params), cause);
+        super(message, cause);
+        setParams(params);
     }
 
     
@@ -55,8 +57,9 @@ public class BusinessException extends RuntimeException {
     }
 
     
-    public void setErrorCode(int errorCode) {
+    public BusinessException setErrorCode(int errorCode) {
         this.errorCode = errorCode;
+        return this;
     }
 
     /**
@@ -69,7 +72,8 @@ public class BusinessException extends RuntimeException {
     /**
      * @param params the params to set
      */
-    public void setParams(Object[] params) {
+    public BusinessException setParams(Object[] params) {
         this.params = params;
+        return this;
     }
 }
