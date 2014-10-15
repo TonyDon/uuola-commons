@@ -634,6 +634,28 @@ public class FieldUtil {
     }
     
     /**
+     * 得到类所有private, protected字段，遇到停止类则截止寻找字段
+     *
+     * @param clazz
+     * @param stopClazz
+     * @return
+     */
+    public static final List<Field> getAllAccessibleFieldList(Class<?> clazz, Class<?> stopClazz) {
+        List<Field> fieldset = new ArrayList<Field>();
+        while (clazz != null && clazz != stopClazz) {
+            Field[] fields = clazz.getDeclaredFields();
+            for(Field f : fields){
+                if(FieldUtil.isAccessibleField(f)){
+                    f.setAccessible(true);
+                    fieldset.add(f);
+                }
+            }
+            clazz = clazz.getSuperclass();
+        }
+        return fieldset;
+    }
+    
+    /**
      * 将对象属性转换为Map<属性名称, Field> <br/>
      * 只对clazz获取属性，不涉及超类
      * @param clazz
