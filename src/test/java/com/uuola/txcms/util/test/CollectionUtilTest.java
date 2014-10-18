@@ -35,7 +35,7 @@ public class CollectionUtilTest {
         test2();
         test3();
         test4();
-        //test5();
+        test5();
         System.out.println(Math.round((double)(5/4)));
     }
 
@@ -43,7 +43,7 @@ public class CollectionUtilTest {
         // TODO Auto-generated method stub
         List<Integer> numbox = new ArrayList<Integer>();
         Collections.addAll(numbox, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19);
-        Iterator<List<Integer>> batchIter = CollectionUtil.makeBatchIterator(numbox, 5);
+        Iterator<List<Integer>> batchIter = CollectionUtil.makeBatchIterator(numbox, 9);
         while (batchIter.hasNext()) {
             List<Integer> nums = batchIter.next();
             System.out.println(nums);
@@ -56,7 +56,7 @@ public class CollectionUtilTest {
         // TODO Auto-generated method stub
         List<Integer> numbox = new ArrayList<Integer>();
         Collections.addAll(numbox, 1, 2, 3);
-        Iterator<List<Integer>> batchIter = CollectionUtil.makeBatchIterator(numbox, 3);
+        Iterator<List<Integer>> batchIter = CollectionUtil.makeBatchIterator(numbox, 8);
         while (batchIter.hasNext()) {
             List<Integer> nums = batchIter.next();
             System.out.println(nums);
@@ -69,7 +69,7 @@ public class CollectionUtilTest {
         // TODO Auto-generated method stub
         List<Integer> numbox = new ArrayList<Integer>();
         Collections.addAll(numbox, 1, 2);
-        Iterator<List<Integer>> batchIter = CollectionUtil.makeBatchIterator(numbox, 3);
+        Iterator<List<Integer>> batchIter = CollectionUtil.makeBatchIterator(numbox, 8);
         while (batchIter.hasNext()) {
             List<Integer> nums = batchIter.next();
             System.out.println(nums);
@@ -81,8 +81,8 @@ public class CollectionUtilTest {
     private static void test4() {
         // TODO Auto-generated method stub
         List<Integer> numbox = new ArrayList<Integer>();
-        Collections.addAll(numbox, 1, 2,3,4,5,6,7,8,9,10,11,12,13,14,15,16);
-        Iterator<List<Integer>> batchIter = CollectionUtil.makeBatchIterator(numbox, 4);
+        Collections.addAll(numbox, 1, 2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18);
+        Iterator<List<Integer>> batchIter = CollectionUtil.makeBatchIterator(numbox, 17);
         while (batchIter.hasNext()) {
             List<Integer> nums = batchIter.next();
             System.out.println(nums);
@@ -95,7 +95,7 @@ public class CollectionUtilTest {
     private static void test5() {
         // TODO Auto-generated method stub
         List<Integer> numbox = new ArrayList<Integer>();
-        for(int k=0; k<10000000; k++){
+        for(int k=0; k<1000000; k++){
             numbox.add(k);
         }
         

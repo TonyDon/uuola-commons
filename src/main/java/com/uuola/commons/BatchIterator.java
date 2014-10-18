@@ -37,14 +37,21 @@ public class BatchIterator<E> implements Iterator<List<E>> {
     
     public static final int CYCLE_TAKE_NUM = 8;
 
+    /**
+     * 传入源List, 预期分配批次容量size,构建对应的批遍历器<br/>
+     * 根据size调整为 CYCLE_TAKE_NUM 的倍数做为实际批次容量,小于或等于 expectBatchSize<br/>
+     * 要求 expectBatchSize 大于或等于 CYCLE_TAKE_NUM
+     * @param srcList
+     * @param expectBatchSize
+     */
     public BatchIterator(List<E> srcList, int expectBatchSize) {
-        if (0 >= expectBatchSize) {
-            throw new RuntimeException(
-                    "Please do not be set less than or equal to '0' for GenericBatchIterator's batchSize !");
+        if (CYCLE_TAKE_NUM > expectBatchSize) {
+            throw new RuntimeException("Do not be set less than  '" + CYCLE_TAKE_NUM
+                    + "' for BatchIterator's expectBatchSize !");
         }
-        int times = (expectBatchSize / CYCLE_TAKE_NUM);
         this.srcList = srcList;
-        this.batchSize = ((expectBatchSize % CYCLE_TAKE_NUM == 0) ? times : times + 1) * CYCLE_TAKE_NUM;
+        this.batchSize = (expectBatchSize % CYCLE_TAKE_NUM == 0) ? expectBatchSize
+                : ((int) (expectBatchSize / CYCLE_TAKE_NUM)) << 3;
         this.size = null == srcList ? 0 : srcList.size();
         result = new ArrayList<E>(this.batchSize);
     }

@@ -65,7 +65,7 @@ public class CollectionUtil {
     /**
      * 得到List集合 批量迭代器<br/>
      * 如果expectBatchSize %  BatchIterator.CYCLE_TAKE_NUM  !=0 <br/>
-     * 则按 CYCLE_TAKE_NUM倍数扩增为适当的batchSize
+     * 则按 CYCLE_TAKE_NUM倍数扩增为适当的batchSize, expectBatchSize不能小于BatchIterator.CYCLE_TAKE_NUM
      * @param srcList
      * @param expectBatchSize
      * @return
