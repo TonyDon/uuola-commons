@@ -21,7 +21,9 @@ public class CodeTest {
         System.out.println(DES.decrypt(e1, k));
         System.out.println(Md5.encode("hongdeviltxd#163.com"));
         System.out.println(Md5.encode("hokit#%#,.7@nm"));
-        System.out.println(129>>2);
+        System.out.println(1<<3);
+        System.out.println(8>>2);
+        System.out.println(Math.ceil((double)9/(double)4));
     }
 
 }
