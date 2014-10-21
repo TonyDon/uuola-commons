@@ -100,7 +100,7 @@ public class JdbcUtil {
         T obj = clazz.newInstance();
         for (int i = 1; i <= colnum; i++) {
             // user_name -> userName
-            String fieldName = StringUtil.parseUnderscoreName(lookupColumnName(rsmd, i));
+            String fieldName = StringUtil.getCamelcaseName(lookupColumnName(rsmd, i));
             Field targetField = fieldNameMap.get(fieldName);
             if (null != targetField) {
                 Object value = getResultSetValue(rs, i, targetField.getType());
@@ -136,7 +136,7 @@ public class JdbcUtil {
             T obj = clazz.newInstance();
             for (int i = 1; i <= colnum; i++) {
                 // user_name -> userName
-                String fieldName = StringUtil.parseUnderscoreName(lookupColumnName(rsmd, i));
+                String fieldName = StringUtil.getCamelcaseName(lookupColumnName(rsmd, i));
                 Field targetField = fieldNameMap.get(fieldName);
                 if (null != targetField) {
                     Object value = getResultSetValue(rs, i, targetField.getType());

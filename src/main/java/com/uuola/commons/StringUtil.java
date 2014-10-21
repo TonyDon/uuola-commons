@@ -218,7 +218,7 @@ public class StringUtil {
      * @param name the column name to be converted
      * @return the name using "camel case"
      */
-    public static String parseUnderscoreName(String name) {
+    public static String getCamelcaseName(String name) {
         if (name == null || name.isEmpty()) {
             return CST_CHAR.STR_EMPTY;
         }
@@ -249,7 +249,33 @@ public class StringUtil {
         return result.toString();
     }
     
-
+    /**
+     * “customerNumber” -&gt; “customer_number”
+     * Convert a name in camelCase to an underscored name in lower case.
+     * Any upper case letters are converted to lower case with a preceding underscore.
+     * @param name
+     * @return
+     */
+    public static String getUnderscoreName(String name) {
+        if (name == null || name.isEmpty()) {
+            return CST_CHAR.STR_EMPTY;
+        }
+        StringBuilder result = new StringBuilder();
+        result.append(name.substring(0, 1).toLowerCase());
+        int len = name.length();
+        for (int i = 1; i < len; i++) {
+            String s = name.substring(i, i + 1);
+            String slc = s.toLowerCase();
+            if (!s.equals(slc)) {
+                result.append("_").append(slc);
+            }
+            else {
+                result.append(s);
+            }
+        }
+        return result.toString();
+    }
+    
     /**
      * 过滤掉文件中的注释部分
      * @param str
