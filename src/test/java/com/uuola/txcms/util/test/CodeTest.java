@@ -1,6 +1,9 @@
 package com.uuola.txcms.util.test;
 
+import java.util.UUID;
+
 import com.uuola.commons.coder.DES;
+import com.uuola.commons.coder.KeyGenerator;
 import com.uuola.commons.coder.Md5;
 
 
@@ -24,6 +27,9 @@ public class CodeTest {
         System.out.println(14<<3);
         System.out.println(8>>2);
         System.out.println(Math.ceil((double)9/(double)4));
+        System.out.println(KeyGenerator.getUUID());
+        System.out.println(KeyGenerator.getRndChr(8, KeyGenerator.LETTER_NUMBER_MAP).toLowerCase()+UUID.randomUUID().toString());
+        System.out.println(KeyGenerator.getRndChr(24)+"-"+Long.toHexString(System.currentTimeMillis()));
     }
 
 }
