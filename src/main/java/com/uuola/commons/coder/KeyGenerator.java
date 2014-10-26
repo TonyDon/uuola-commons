@@ -50,8 +50,13 @@ public final class KeyGenerator {
         if (1 == len) {
             return String.valueOf(map[NumberUtil.genRndInt(0, size)]);
         }
+        
         StringBuilder sb = new StringBuilder(len);
-        if (4 == len) {
+        if(2 == len){
+            sb.append(map[NumberUtil.genRndInt(0, size)]);
+            sb.append(map[NumberUtil.genRndInt(0, size)]);
+            
+        }else if (4 == len) {
             sb.append(map[NumberUtil.genRndInt(0, size)]);
             sb.append(map[NumberUtil.genRndInt(0, size)]);
             sb.append(map[NumberUtil.genRndInt(0, size)]);
