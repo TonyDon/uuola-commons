@@ -31,6 +31,7 @@ public class CodeTest {
         System.out.println(KeyGenerator.getRndChr(8, KeyGenerator.LETTER_NUMBER_MAP).toLowerCase()+UUID.randomUUID().toString());
         System.out.println(KeyGenerator.getRndChr(24)+"-"+Long.toHexString(System.currentTimeMillis()));
         System.out.println(KeyGenerator.getRndChr(2).toLowerCase()+UUID.randomUUID().toString());
+        System.out.println(System.currentTimeMillis());
     }
 
 }

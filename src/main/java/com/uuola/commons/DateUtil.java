@@ -98,5 +98,13 @@ public class DateUtil {
         return System.currentTimeMillis();
     }
     
+    /**
+     * 将毫秒时间戳转为Date
+     * @param timeMillis
+     * @return
+     */
+    public static Date parseDate(long timeMillis){
+        return new Date(timeMillis);
+    }
 
 }
