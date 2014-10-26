@@ -2,9 +2,11 @@ package com.uuola.txcms.util.test;
 
 import java.util.UUID;
 
+import com.uuola.commons.DateUtil;
 import com.uuola.commons.coder.DES;
 import com.uuola.commons.coder.KeyGenerator;
 import com.uuola.commons.coder.Md5;
+import com.uuola.commons.constant.CST_DATE_FORMAT;
 
 
 public class CodeTest {
@@ -32,6 +34,7 @@ public class CodeTest {
         System.out.println(KeyGenerator.getRndChr(24)+"-"+Long.toHexString(System.currentTimeMillis()));
         System.out.println(KeyGenerator.getRndChr(2).toLowerCase()+UUID.randomUUID().toString());
         System.out.println(System.currentTimeMillis());
+        System.out.println(DateUtil.formatTimeMillis(System.currentTimeMillis() * 5, CST_DATE_FORMAT.YYYYMMDDHHMMSSSSS));
     }
 
 }
