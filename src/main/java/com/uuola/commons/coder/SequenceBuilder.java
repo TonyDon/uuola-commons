@@ -16,7 +16,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * <pre>
- * 序列生成器
+ * 序列生成器<br/>
+ * 可扩展为多JVM的序列生成器,<br/>
+ * 每个jvm负责一个 seq的生成，如jvm标记为01的app负责生成  SequenceBuilder.getSid()+“01”
  * @author tangxiaodong
  * 创建日期: 2014-10-27
  * </pre>
