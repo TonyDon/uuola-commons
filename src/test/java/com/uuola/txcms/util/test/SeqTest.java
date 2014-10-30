@@ -22,7 +22,7 @@ public class SeqTest {
         System.out.println(System.currentTimeMillis());
         long fixedValue = 1414424012812L;
         SequenceBuilder sb = new SequenceBuilder(fixedValue, 9);
-        for(int k=0; k<100; k++){
+        for(int k=0; k<20; k++){
             //System.out.println(sb.getSid());
             (new DemoGet(sb)).start();
         }
