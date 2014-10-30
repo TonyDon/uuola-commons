@@ -38,7 +38,7 @@ public class SequenceBuilder {
      * 
      * @param fixedValue 修正值，一般取System.currentTimeMillis()的一个过去值
      * @param maxExtDigit 当毫秒时间值相同时，进行扩展自增累加的最大值,超过该值，将使得线程等待16ms,在下个周期进行获取序列
-     * <br/>扩展倍数，只能是10, 100, 1000, 10000, 分别对应maxExtDigit: 9, 99, 999, 9999
+     * <br/>扩展倍数，只能是10, 100, 1000, 1000, 分别对应maxExtDigit: 9, 99, 999, 999
      */
     public SequenceBuilder(long fixedValue, int maxExtDigit) {
         this.fixedValue = fixedValue;
@@ -50,10 +50,8 @@ public class SequenceBuilder {
             this.extTimes = 100;
         } else if (maxExtDigit < 1000) {
             this.extTimes = 1000;
-        } else if (maxExtDigit < 10000) {
-            this.extTimes = 10000;
         } else {
-            throw new RuntimeException("maxExtDigit at 9~9999 range !");
+            throw new RuntimeException("maxExtDigit at 9~999 range !");
         }
     }
     
