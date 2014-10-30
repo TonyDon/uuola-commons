@@ -23,8 +23,8 @@ public class SeqTest {
         long fixedValue = 1414424012812L;
         SequenceBuilder sb = new SequenceBuilder(fixedValue, 9);
         for(int k=0; k<100; k++){
-            System.out.println(sb.getSid());
-            //(new DemoGet(sb)).start();
+            //System.out.println(sb.getSid());
+            (new DemoGet(sb)).start();
         }
     }
 }
