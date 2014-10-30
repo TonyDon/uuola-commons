@@ -44,7 +44,9 @@ public class SequenceBuilder {
         this.fixedValue = fixedValue;
         this.currTimeSeeds = System.currentTimeMillis();
         this.maxExtDigit = maxExtDigit;
-        if (maxExtDigit < 100) {
+        if (maxExtDigit < 10) {
+            this.extTimes = 10;
+        } else if (maxExtDigit < 100) {
             this.extTimes = 100;
         } else if (maxExtDigit < 1000) {
             this.extTimes = 1000;
