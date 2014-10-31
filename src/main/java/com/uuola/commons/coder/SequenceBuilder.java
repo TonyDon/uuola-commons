@@ -29,7 +29,7 @@ public class SequenceBuilder {
 
     private int increase = 0;
     private long fixedValue;
-    private long currTimeSeeds;
+    private long beforeTimeSeeds;
     private Lock lock = new ReentrantLock();
     private int maxExtDigit;
     private int extTimes;
@@ -42,7 +42,7 @@ public class SequenceBuilder {
      */
     public SequenceBuilder(long fixedValue, int maxExtDigit) {
         this.fixedValue = fixedValue;
-        this.currTimeSeeds = System.currentTimeMillis();
+        this.beforeTimeSeeds = System.currentTimeMillis();
         this.maxExtDigit = maxExtDigit;
         if (maxExtDigit < 10) {
             this.extTimes = 10;
@@ -51,7 +51,7 @@ public class SequenceBuilder {
         } else if (maxExtDigit < 1000) {
             this.extTimes = 1000;
         } else {
-            throw new RuntimeException("maxExtDigit at 9~999 range !");
+            throw new IllegalArgumentException("maxExtDigit at 9~999 range !");
         }
     }
     
@@ -61,7 +61,8 @@ public class SequenceBuilder {
         lock.lock();
         newTimeSeeds = System.currentTimeMillis();
         try {
-            if (newTimeSeeds == currTimeSeeds) {
+            // 不同的线程在相同的时间内获取sid, 尝试扩展位自增
+            if (newTimeSeeds == beforeTimeSeeds) {
                 if (increase < maxExtDigit) {
                     increase++;
                     id = (newTimeSeeds - fixedValue) * extTimes + increase;
@@ -72,10 +73,12 @@ public class SequenceBuilder {
                     id = (newTimeSeeds - fixedValue) * extTimes;
                 }
             } else {
+                // 在不同的时间内获取sid, 直接使用获取的时间获取sid
                 increase = 0;
                 id = (newTimeSeeds - fixedValue) * extTimes;
             }
-            currTimeSeeds = newTimeSeeds; // 更新时间种子
+            // 更新之前的更新时间种子为最新时间戳
+            beforeTimeSeeds = newTimeSeeds;  
         } catch (Exception e) {
             log.error("", e.toString());
             id = Long.MIN_VALUE;
@@ -85,53 +88,4 @@ public class SequenceBuilder {
         return id;
     }
 
-    
-    public int getIncrease() {
-        return increase;
-    }
-
-    
-    public void setIncrease(int increase) {
-        this.increase = increase;
-    }
-
-    
-    public long getFixedValue() {
-        return fixedValue;
-    }
-
-    
-    public void setFixedValue(long fixedValue) {
-        this.fixedValue = fixedValue;
-    }
-
-    
-    public long getCurrTimeSeeds() {
-        return currTimeSeeds;
-    }
-
-    
-    public void setCurrTimeSeeds(long currTimeSeeds) {
-        this.currTimeSeeds = currTimeSeeds;
-    }
-
-    
-    public int getMaxExtDigit() {
-        return maxExtDigit;
-    }
-
-    
-    public void setMaxExtDigit(int maxExtDigit) {
-        this.maxExtDigit = maxExtDigit;
-    }
-
-    
-    public int getExtTimes() {
-        return extTimes;
-    }
-
-    
-    public void setExtTimes(int extTimes) {
-        this.extTimes = extTimes;
-    }
 }
