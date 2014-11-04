@@ -23,7 +23,7 @@
 		<javax.mail-version>1.5.0</javax.mail-version>
 		<javax.persistence.api-version>2.1</javax.persistence.api-version>
 		<junit-version>4.10</junit-version>
-		<tomcat-jdbc-version>7.0.32</tomcat-jdbc-version>
+		<tomcat-jdbc-version>7.0.56</tomcat-jdbc-version>
 	</properties>
 	<dependencies>
 		<dependency>
