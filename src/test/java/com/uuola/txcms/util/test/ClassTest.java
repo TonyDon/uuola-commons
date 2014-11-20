@@ -21,7 +21,7 @@ import com.uuola.commons.reflect.ClassUtil;
 public class ClassTest {
 
     public static void main(String[] args){
-        Set<Class<?>> clazzes = ClassUtil.getClasses("org.apache.log4j.config", false);
+        Set<Class<?>> clazzes = ClassUtil.getClasses("org.apache.commons.codec", false);
         for(Class<?> c : clazzes){
             System.out.println(c.getName());
         }

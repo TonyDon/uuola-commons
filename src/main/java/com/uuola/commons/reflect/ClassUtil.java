@@ -8,7 +8,6 @@ package com.uuola.commons.reflect;
 
 import java.io.File;
 import java.io.FileFilter;
-import java.io.IOException;
 import java.net.JarURLConnection;
 import java.net.URL;
 import java.net.URLDecoder;
@@ -68,6 +67,7 @@ public class ClassUtil {
             dirs = classLoader.getResources(packageDirName);
             while (dirs.hasMoreElements()) {
                 URL url = dirs.nextElement();
+                System.out.println(url.getPath());
                 String protocol = url.getProtocol();
                 // 如果是以文件的形式保存在服务器上
                 if ("file".equals(protocol)) {
@@ -84,49 +84,32 @@ public class ClassUtil {
                             // 获取jar里的一个实体 可以是目录 和一些jar包里的其他文件 如META-INF等文件
                             JarEntry entry = entries.nextElement();
                             String name = entry.getName();
+                            System.out.println(name);
                             // 如果是以/开头的
                             if (name.charAt(0) == '/') {
                                 // 获取后面的字符串
                                 name = name.substring(1);
                             }
-                            // 如果前半部分和定义的包名相同 且为.class结尾
                             if (name.startsWith(packageDirName) && name.endsWith(".class")) {
                                 name = name.replace('/', '.');
-                                String className = name.substring(0, name.length() - 6);
+                                int lastExtIdx = name.length() - 6;
+                                String className = name.substring(0, lastExtIdx);
+                                if (!recursive && className.indexOf('.', packageName.length() + 1) != -1) {
+                                    continue;
+                                }
                                 try {
-                                    // 添加到classes
                                     classes.add(classLoader.loadClass(className));
-                                } catch (ClassNotFoundException e) {
+                                } catch (Throwable e) {
                                     log.error("", e);
                                 }
-//                                int idx = name.lastIndexOf('/');
-//                                // 如果以"/"结尾 是一个包
-//                                if (idx != -1) {
-//                                    // 获取包名 把"/"替换成"."
-//                                    packageName = name.substring(0, idx).replace('/', '.');
-//                                }
-//                                // 如果可以迭代下去 并且是一个包
-//                                if ((idx != -1) || recursive) {
-//                                    // 如果是一个.class文件 而且不是目录
-//                                    if (name.endsWith(".class") && !entry.isDirectory()) {
-//                                        // 去掉后面的".class" 获取真正的类名
-//                                        String className = name.substring(packageName.length() + 1, name.length() - 6);
-//                                        try {
-//                                            // 添加到classes
-//                                            classes.add(classLoader.loadClass(packageName + '.' + className));
-//                                        } catch (ClassNotFoundException e) {
-//                                            log.error("", e);
-//                                        }
-//                                    }
-//                                }
                             }
                         }
-                    } catch (IOException e) {
+                    } catch (Throwable e) {
                         log.error("", e);
                     }
                 }
             }
-        } catch (Exception e) {
+        } catch (Throwable e) {
             log.error("", e);
         }
         return classes;
