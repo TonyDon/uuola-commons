@@ -67,7 +67,6 @@ public class ClassUtil {
             dirs = classLoader.getResources(packageDirName);
             while (dirs.hasMoreElements()) {
                 URL url = dirs.nextElement();
-                System.out.println(url.getPath());
                 String protocol = url.getProtocol();
                 // 如果是以文件的形式保存在服务器上
                 if ("file".equals(protocol)) {
