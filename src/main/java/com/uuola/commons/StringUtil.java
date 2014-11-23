@@ -306,4 +306,25 @@ public class StringUtil {
     public static boolean endNotWith(String str, String suffix){
         return !StringUtils.endsWith(str, suffix);
     }
+    
+    
+    /**
+     * 构建参数占位符如 3个参数为 ?,?,?
+     * eg: Long[] inIds = {111L,222L,333L}; length = 3
+     * return ?,?,?
+     * @param argNum
+     * @return
+     */
+    public static String getPlaceholder(int argNum) {
+        if (1 == argNum) {
+            return CST_CHAR.STR_QUESTION;
+        }
+        StringBuilder sb = new StringBuilder();
+        int lastNum = argNum - 1;
+        for (int k = 0; k < lastNum; k++) {
+            sb.append(CST_CHAR.CHAR_QUESTION);
+            sb.append(CST_CHAR.CHAR_COMMA);
+        }
+        return sb.append(CST_CHAR.CHAR_QUESTION).toString();
+    }
 }
