@@ -72,7 +72,7 @@ public class MutiFileUpload extends FileUploadBase{
      * eg: /www/files/2013/09/08/u12321/9823/fileABC_0.jpg 
      * @param parent /www/files/
      * @param fileNamePrefix eg: 2013/09/08/u12321/9823/fileABC
-     * @param isRandomSuffix if true , eg:/www/files/2013/09/08/u12321/9823/fileABC_0_sxsfgd.jpg 
+     * @param isRandomSuffix if true , eg:/www/files/2013/09/08/u12321/9823/fileABC_0_s0Km.jpg 
      * @throws Exception
      */
     public void upload(String parent, String fileNamePrefix, boolean isRandomSuffix) throws Exception {
@@ -92,7 +92,7 @@ public class MutiFileUpload extends FileUploadBase{
             StringBuilder rndName = (new StringBuilder(fileNamePrefix))
                     .append(CST_CHAR.CHAR_UNDER_LINE).append(idx);
             if(isRandomSuffix){
-                rndName.append(CST_CHAR.CHAR_UNDER_LINE).append(KeyGenerator.getRndChr(6));
+                rndName.append(CST_CHAR.CHAR_UNDER_LINE).append(KeyGenerator.getRndChr(4));
             }
             rndName.append(CST_CHAR.CHAR_DOT).append(FileUtil.getFileExt(item.getName()));
             String tmpRndFile = rndName.toString();
