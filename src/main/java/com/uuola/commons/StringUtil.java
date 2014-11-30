@@ -22,7 +22,7 @@ import com.uuola.commons.constant.CST_REGEX;
  * 创建日期: 2013-6-12
  * </pre>
  */
-public class StringUtil {
+public  abstract class StringUtil {
 
     /**
      * 检查字符串是否为空

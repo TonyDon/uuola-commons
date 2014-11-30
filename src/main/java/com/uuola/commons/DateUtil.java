@@ -19,7 +19,7 @@ import java.util.Date;
  * 创建日期: 2013-6-11
  * </pre>
  */
-public class DateUtil {
+public  abstract class DateUtil {
 
 
     /**

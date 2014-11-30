@@ -29,7 +29,7 @@ import com.uuola.commons.constant.CST_DATE_FORMAT;
 import com.uuola.commons.exception.Assert;
 
 
-public class FieldUtil {
+public abstract  class FieldUtil {
 
    
 

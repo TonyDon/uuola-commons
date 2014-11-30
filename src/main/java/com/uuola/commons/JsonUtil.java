@@ -15,7 +15,7 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
  *
  * @author txdnet
  */
-public final class JsonUtil {
+public  abstract  class JsonUtil {
 
     // 键名过滤为小写
     private static NameFilter lowerNameFilter = new NameFilter() {

@@ -25,7 +25,7 @@ import com.uuola.commons.exception.Assert;
  * 创建日期: 2013-8-31
  * </pre>
  */
-public class MethodUtil {
+public  abstract class MethodUtil {
 
     /**
      * Attempt to find a {@link Method} on the supplied class with the supplied name

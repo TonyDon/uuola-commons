@@ -32,7 +32,7 @@ import com.uuola.commons.constant.CST_ENCODING;
  * 创建日期: 2013-7-27
  * </pre>
  */
-public class ClassUtil {
+public  abstract  class ClassUtil {
     
     private static Logger log = LoggerFactory.getLogger(ClassUtil.class);
 

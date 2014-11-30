@@ -18,7 +18,7 @@ import java.util.Map;
  * 创建日期: 2013-8-31
  * </pre>
  */
-public class CollectionUtil {
+public abstract class CollectionUtil {
 
     /**
      * 判断map是否非空
