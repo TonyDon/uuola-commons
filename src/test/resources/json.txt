@@ -1,0 +1,12 @@
+[
+	{
+	"name":"tony don",
+	"age":11,
+	"jobs":['a','b',]
+	},
+	{
+	"name":"hotkit",
+	"age":16,
+	"house":{"name":"bobo"}
+	}
+]

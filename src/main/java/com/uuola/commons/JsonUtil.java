@@ -3,9 +3,13 @@ package com.uuola.commons;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.Reader;
 import java.util.List;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONReader;
+import com.alibaba.fastjson.TypeReference;
+import com.alibaba.fastjson.parser.Feature;
 import com.alibaba.fastjson.serializer.JSONSerializer;
 import com.alibaba.fastjson.serializer.NameFilter;
 import com.alibaba.fastjson.serializer.SerializeWriter;
@@ -51,6 +55,19 @@ public  abstract  class JsonUtil {
         } finally {
             out.close();
         }
+    }
+    
+    /**
+     * 通过Reader文本读取器转换为泛型对象
+     * @param reader
+     * @return
+     */
+    public static <T> T parseReader(Reader reader){
+        JSONReader jsonReader = new JSONReader(reader);
+        jsonReader.config(Feature.DisableCircularReferenceDetect, true);
+        T result = jsonReader.readObject(new TypeReference<T>(){}.getType());
+        jsonReader.close();
+        return result;
     }
 
     // JSON字符串转为对象数组列表
