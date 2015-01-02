@@ -83,7 +83,6 @@ public  abstract  class ClassUtil {
                             // 获取jar里的一个实体 可以是目录 和一些jar包里的其他文件 如META-INF等文件
                             JarEntry entry = entries.nextElement();
                             String name = entry.getName();
-                            System.out.println(name);
                             // 如果是以/开头的
                             if (name.charAt(0) == '/') {
                                 // 获取后面的字符串
