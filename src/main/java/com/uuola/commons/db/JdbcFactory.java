@@ -69,14 +69,14 @@ public class JdbcFactory {
         return dataSourceProxyMap;
     }
     
-    private static DataSourceProxy buildDataSourceProxy(String name, Properties jdbcProperties) {
+    private static DataSourceProxy buildDataSourceProxy(String dsName, Properties jdbcProperties) {
         PoolProperties poolProperties = new PoolProperties();
-        boolean isDefautName = JdbcCfg.DEFAULT_DATASOURCE_NAME.equals(name);
+        boolean isDefautName = JdbcCfg.DEFAULT_DATASOURCE_NAME.equals(dsName);
 
         /**
          * 设置驱动类名
          */
-        String driverClass = jdbcProperties.getProperty(getJdbcParamName(isDefautName, name,
+        String driverClass = jdbcProperties.getProperty(getJdbcParamName(isDefautName, dsName,
                 JdbcCfg.PARAMS_DRIVER_CLASS));
         if (StringUtil.isNotEmpty(driverClass)) {
             poolProperties.setDriverClassName(driverClass);
@@ -86,7 +86,7 @@ public class JdbcFactory {
          * 设置连接字符
          */
         String url = jdbcProperties
-                .getProperty(getJdbcParamName(isDefautName, name, JdbcCfg.PARAMS_CONNECTION_URL));
+                .getProperty(getJdbcParamName(isDefautName, dsName, JdbcCfg.PARAMS_CONNECTION_URL));
         if (StringUtil.isNotEmpty(url)) {
             poolProperties.setUrl(url);
         }
@@ -95,7 +95,7 @@ public class JdbcFactory {
          * 设置用户名
          */
         String username = jdbcProperties
-                .getProperty(getJdbcParamName(isDefautName, name, JdbcCfg.PARAMS_USERNAME));
+                .getProperty(getJdbcParamName(isDefautName, dsName, JdbcCfg.PARAMS_USERNAME));
         if (StringUtil.isNotEmpty(username)) {
             poolProperties.setUsername(username);
         }
@@ -104,7 +104,7 @@ public class JdbcFactory {
          * 设置连接密码
          */
         String password = jdbcProperties
-                .getProperty(getJdbcParamName(isDefautName, name, JdbcCfg.PARAMS_PASSWORD));
+                .getProperty(getJdbcParamName(isDefautName, dsName, JdbcCfg.PARAMS_PASSWORD));
         if (StringUtil.isNotEmpty(password)) {
             poolProperties.setPassword(decrypt(password));
         }
@@ -113,7 +113,7 @@ public class JdbcFactory {
          * 设置初始化连接数
          */
         String minSize = jdbcProperties
-                .getProperty(getJdbcParamName(isDefautName, name, JdbcCfg.PARAMS_MIN_SIZE));
+                .getProperty(getJdbcParamName(isDefautName, dsName, JdbcCfg.PARAMS_MIN_SIZE));
         if (StringUtil.isNotEmpty(minSize)) {
             poolProperties.setInitialSize(Integer.parseInt(minSize));
         }
@@ -122,7 +122,7 @@ public class JdbcFactory {
          * 设置最小空闲数
          */
         String minIdle = jdbcProperties
-                .getProperty(getJdbcParamName(isDefautName, name, JdbcCfg.PARAMS_MIN_IDLE));
+                .getProperty(getJdbcParamName(isDefautName, dsName, JdbcCfg.PARAMS_MIN_IDLE));
         if(StringUtil.isNotEmpty(minIdle)){
             poolProperties.setMinIdle(Integer.parseInt(minIdle));
         }
@@ -131,16 +131,25 @@ public class JdbcFactory {
          * 设置最大等待时间
          */
         String maxWait = jdbcProperties
-                .getProperty(getJdbcParamName(isDefautName, name, JdbcCfg.PARAMS_MAX_WAIT));
+                .getProperty(getJdbcParamName(isDefautName, dsName, JdbcCfg.PARAMS_MAX_WAIT));
         if(StringUtil.isNotEmpty(maxWait)){
             poolProperties.setMaxWait(Integer.parseInt(maxWait));
+        }
+        
+        /**
+         * 最大空闲连接数
+         */
+        String maxIdle = jdbcProperties
+                .getProperty(getJdbcParamName(isDefautName, dsName, JdbcCfg.PARAMS_MAX_IDLE));
+        if (StringUtil.isNotEmpty(maxIdle)) {
+            poolProperties.setMaxIdle(Integer.parseInt(maxIdle));
         }
         
         /**
          * 最大活动链接数
          */
         String maxActive = jdbcProperties
-                .getProperty(getJdbcParamName(isDefautName, name, JdbcCfg.PARAMS_MAX_ACTIVE));
+                .getProperty(getJdbcParamName(isDefautName, dsName, JdbcCfg.PARAMS_MAX_ACTIVE));
         if(StringUtil.isNotEmpty(maxActive)){
             poolProperties.setMaxActive(Integer.parseInt(maxActive));
         }
@@ -149,7 +158,7 @@ public class JdbcFactory {
          * 设置连接验证查询SQL
          */
         String validationQuery = jdbcProperties
-                .getProperty(getJdbcParamName(isDefautName, name, JdbcCfg.PARAMS_VALIDATION_QUERY));
+                .getProperty(getJdbcParamName(isDefautName, dsName, JdbcCfg.PARAMS_VALIDATION_QUERY));
         if(StringUtil.isNotEmpty(validationQuery)){
             poolProperties.setValidationQuery(validationQuery);
         }
@@ -158,7 +167,7 @@ public class JdbcFactory {
          * 设置连接验证时间间隔
          */
         String validationInterval = jdbcProperties
-                .getProperty(getJdbcParamName(isDefautName, name, JdbcCfg.PARAMS_VALIDATION_INTERVAL));
+                .getProperty(getJdbcParamName(isDefautName, dsName, JdbcCfg.PARAMS_VALIDATION_INTERVAL));
         if(StringUtil.isNotEmpty(validationInterval)){
             poolProperties.setValidationInterval(Long.parseLong(validationInterval));
         }
@@ -167,7 +176,7 @@ public class JdbcFactory {
          * tomcat-jdbc拦截器
          */
         String jdbcInterceptors = jdbcProperties
-                .getProperty(getJdbcParamName(isDefautName, name, JdbcCfg.PARAMS_JDBCINTERCEPTORS));
+                .getProperty(getJdbcParamName(isDefautName, dsName, JdbcCfg.PARAMS_JDBCINTERCEPTORS));
         if(StringUtil.isNotEmpty(jdbcInterceptors)){
             poolProperties.setJdbcInterceptors(jdbcInterceptors);
         }
@@ -176,7 +185,7 @@ public class JdbcFactory {
          * 是否自动终结连接
          */
         String removeAbandoned = jdbcProperties
-                .getProperty(getJdbcParamName(isDefautName, name, JdbcCfg.PARAMS_REMOVEABANDONED));
+                .getProperty(getJdbcParamName(isDefautName, dsName, JdbcCfg.PARAMS_REMOVEABANDONED));
         if(StringUtil.isNotEmpty(removeAbandoned)){
             poolProperties.setRemoveAbandoned(Boolean.parseBoolean(removeAbandoned));
         }
@@ -185,7 +194,7 @@ public class JdbcFactory {
          * 在超时多少秒后执行连接终结
          */
         String removeAbandonedTimeout = jdbcProperties
-                .getProperty(getJdbcParamName(isDefautName, name, JdbcCfg.PARAMS_REMOVEABANDONEDTIMEOUT));
+                .getProperty(getJdbcParamName(isDefautName, dsName, JdbcCfg.PARAMS_REMOVEABANDONEDTIMEOUT));
         if(StringUtil.isNotEmpty(removeAbandonedTimeout)){
             poolProperties.setRemoveAbandonedTimeout(Integer.parseInt(removeAbandonedTimeout));
         }
@@ -194,7 +203,7 @@ public class JdbcFactory {
          * 是否打印终结连接日志
          */
         String logAbandoned = jdbcProperties
-                .getProperty(getJdbcParamName(isDefautName, name, JdbcCfg.PARAMS_LOGABANDONED));
+                .getProperty(getJdbcParamName(isDefautName, dsName, JdbcCfg.PARAMS_LOGABANDONED));
         if(StringUtil.isNotEmpty(logAbandoned)){
             poolProperties.setLogAbandoned(Boolean.parseBoolean(logAbandoned));
         }
@@ -203,7 +212,7 @@ public class JdbcFactory {
          * 在从池中取出连接前进行检验
          */
         String testOnBorrow = jdbcProperties
-                .getProperty(getJdbcParamName(isDefautName, name, JdbcCfg.PARAMS_TESTONBORROW));
+                .getProperty(getJdbcParamName(isDefautName, dsName, JdbcCfg.PARAMS_TESTONBORROW));
         if(StringUtil.isNotEmpty(testOnBorrow)){
             poolProperties.setTestOnBorrow(Boolean.parseBoolean(testOnBorrow));
         }
@@ -212,7 +221,7 @@ public class JdbcFactory {
          * 是否在空闲时检验
          */
         String testWhileIdle = jdbcProperties
-                .getProperty(getJdbcParamName(isDefautName, name, JdbcCfg.PARAMS_TESTWHILEIDLE));
+                .getProperty(getJdbcParamName(isDefautName, dsName, JdbcCfg.PARAMS_TESTWHILEIDLE));
         if(StringUtil.isNotEmpty(testWhileIdle)){
             poolProperties.setTestWhileIdle(Boolean.parseBoolean(testWhileIdle));
         }
@@ -221,7 +230,7 @@ public class JdbcFactory {
          * 是否在返回连接时检验
          */
         String testOnReturn = jdbcProperties
-                .getProperty(getJdbcParamName(isDefautName, name, JdbcCfg.PARAMS_TESTONRETURN));
+                .getProperty(getJdbcParamName(isDefautName, dsName, JdbcCfg.PARAMS_TESTONRETURN));
         if(StringUtil.isNotEmpty(testOnReturn)){
             poolProperties.setTestOnReturn(Boolean.parseBoolean(testOnReturn));
         }
@@ -233,13 +242,13 @@ public class JdbcFactory {
          *  校验连接池中闲置时间超过minEvictableIdleTimeMillis的连接对象
          */
         String timeBetweenEvictionRunsMillis = jdbcProperties
-                .getProperty(getJdbcParamName(isDefautName, name, JdbcCfg.PARAMS_TIMEBETWEENEVICTIONRUNSMILLIS));
+                .getProperty(getJdbcParamName(isDefautName, dsName, JdbcCfg.PARAMS_TIMEBETWEENEVICTIONRUNSMILLIS));
         if(StringUtil.isNotEmpty(timeBetweenEvictionRunsMillis)){
             poolProperties.setTimeBetweenEvictionRunsMillis(Integer.parseInt(timeBetweenEvictionRunsMillis));
         }
         
         String minEvictableIdleTimeMillis = jdbcProperties
-                .getProperty(getJdbcParamName(isDefautName, name, JdbcCfg.PARAMS_MINEVICTABLEIDLETIMEMILLIS));
+                .getProperty(getJdbcParamName(isDefautName, dsName, JdbcCfg.PARAMS_MINEVICTABLEIDLETIMEMILLIS));
         if(StringUtil.isNotEmpty(minEvictableIdleTimeMillis)){
             poolProperties.setMinEvictableIdleTimeMillis(Integer.parseInt(minEvictableIdleTimeMillis));
         }
