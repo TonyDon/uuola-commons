@@ -62,6 +62,7 @@ public class JdbcCfg {
     public static final String PARAMS_MIN_SIZE = "min_size";
     public static final String PARAMS_MIN_IDLE = "min_idle";
     public static final String PARAMS_MAX_WAIT = "max_wait";
+    public static final String PARAMS_MAX_IDLE = "max_idle";
     public static final String PARAMS_MAX_ACTIVE = "max_active";
     public static final String PARAMS_VALIDATION_QUERY = "validation_query";
     public static final String PARAMS_VALIDATION_INTERVAL = "validation_interval";
