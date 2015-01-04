@@ -20,7 +20,7 @@
         try {
             stmt = conn.prepareStatement("select * from infobase limit 12");
             rs = stmt.executeQuery();
-            List<InfoBase> list = JdbcUtil.parseListByResultSets(rs, InfoBase.class);
+            List<InfoBase> list = JdbcUtil.parseListByResultSet(rs, InfoBase.class);
             System.out.println(JsonUtil.toJSONString(list));
         } catch (Throwable t) {
 
