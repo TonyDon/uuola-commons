@@ -10,11 +10,9 @@ import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.sql.Blob;
 import java.sql.Clob;
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,6 +23,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.uuola.commons.ObjectUtil;
 import com.uuola.commons.StringUtil;
 import com.uuola.commons.reflect.FieldUtil;
 /**
@@ -59,7 +58,7 @@ public class JdbcUtil {
      * 将ResultSet多个结果集包装到List<Map<String,Object>>对应值 return
      * List<Map<String,Object>>;
      */
-    public static List<Map<String, Object>> parseListByResultSets(ResultSet rs) throws SQLException {
+    public static List<Map<String, Object>> parseListByResultSet(ResultSet rs) throws SQLException {
         if (null == rs || rs.isClosed()) {
             logger.info("JDBC ResultSet is null or closed.");
             return Collections.emptyList();
@@ -120,7 +119,7 @@ public class JdbcUtil {
      * @return
      * @throws Exception
      */
-    public static <T> List<T> parseListByResultSets(ResultSet rs, Class<T> clazz) throws Exception {
+    public static <T> List<T> parseListByResultSet(ResultSet rs, Class<T> clazz) throws Exception {
         if (null == rs || rs.isClosed()) {
             logger.info("JDBC ResultSet is null or closed.");
             return Collections.emptyList();
@@ -286,62 +285,38 @@ public class JdbcUtil {
      * 
      * @param c
      */
-    public static void close(Connection c) {
+    public static void close(AutoCloseable c) {
         if (c != null) {
             try {
                 c.close();
             } catch (SQLException e) {
-                logger.warn("Could not close JDBC Connection.", e);
+                logger.warn("Could not close AutoCloseable Object.", e);
             } catch (Throwable t) {
-                logger.warn("Unexpected exception on closing JDBC Connection.", t);
+                logger.error("Unexpected exception on closing AutoCloseable Object.", t);
             }
         }
     }
 
+    
     /**
-     * 关闭jdbc SQL处理对象
-     * 
-     * @param stmt
+     * 关闭 AutoCloseable Array
+     * @param closeables
      */
-    public static void close(Statement stmt) {
-        if (stmt != null) {
-            try {
-                stmt.close();
-            } catch (SQLException e) {
-                logger.warn("Could not close JDBC Statement.", e);
-            } catch (Throwable t) {
-                logger.warn("Unexpected exception on closing JDBC Statement", t);
+    public static void close(AutoCloseable... closeables){
+        if(ObjectUtil.isEmpty(closeables)){
+            logger.warn("The closeables params is empty or null ! Don't close anyone!");
+            return ;
+        }
+        for (AutoCloseable cb : closeables) {
+            if (cb != null) {
+                try {
+                    cb.close();
+                } catch (SQLException e) {
+                    logger.warn("Could not close AutoCloseable Object.", e);
+                } catch (Throwable t) {
+                    logger.error("Unexpected exception on closing AutoCloseable Object.", t);
+                }
             }
         }
-    }
-
-    /**
-     * 关闭jdbc 结果集
-     * 
-     * @param rs
-     */
-    public static void close(ResultSet rs) {
-        if (rs != null) {
-            try {
-                rs.close();
-            } catch (SQLException e) {
-                logger.warn("Could not close JDBC ResultSet", e);
-            } catch (Throwable t) {
-                logger.warn("Unexpected exception on closing JDBC ResultSet", t);
-            }
-        }
-    }
-
-    /**
-     * 关闭jdbc 记录集，处理器 及连接
-     * 
-     * @param rs
-     * @param stmt
-     * @param conn
-     */
-    public static void close(ResultSet rs, Statement stmt, Connection conn) {
-        close(rs);
-        close(stmt);
-        close(conn);
     }
 }
