@@ -28,7 +28,7 @@ public class HttpClientFactory {
     private static PoolingHttpClientConnectionManager hccm = create();
     
     private static PoolingHttpClientConnectionManager create(){
-        PoolingHttpClientConnectionManager cm = new PoolingHttpClientConnectionManager(6L, TimeUnit.HOURS);
+        PoolingHttpClientConnectionManager cm = new PoolingHttpClientConnectionManager(1L, TimeUnit.HOURS);
         cm.setMaxTotal(100);
         cm.setDefaultMaxPerRoute(10);
         
