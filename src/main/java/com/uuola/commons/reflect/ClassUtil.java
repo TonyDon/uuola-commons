@@ -92,11 +92,15 @@ public  abstract  class ClassUtil {
                                 name = name.replace('/', '.');
                                 int lastExtIdx = name.length() - 6;
                                 String className = name.substring(0, lastExtIdx);
+                                // 如果不递归且还存在下级目录类文件，则直接返回，不加载
                                 if (!recursive && className.indexOf('.', packageName.length() + 1) != -1) {
                                     continue;
                                 }
                                 try {
-                                    classes.add(classLoader.loadClass(className));
+                                    Class<?> target = classLoader.loadClass(className);
+                                    if(null != target){
+                                        classes.add(target);
+                                    }
                                 } catch (Throwable e) {
                                     log.error("", e);
                                 }
@@ -143,7 +147,10 @@ public  abstract  class ClassUtil {
                 // 如果是java类文件 去掉后面的.class 只留下类名
                 String className = file.getName().substring(0, file.getName().length() - 6);
                 try {
-                    classes.add(classLoader.loadClass(packageName + '.' + className));
+                    Class<?> target = classLoader.loadClass(packageName + '.' + className);
+                    if (null != target) {
+                        classes.add(target);
+                    }
                 } catch (Exception e) {
                     log.error("", e);
                 }
