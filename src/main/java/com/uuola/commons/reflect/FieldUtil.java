@@ -697,7 +697,6 @@ public abstract  class FieldUtil {
         return ( 
                 !Modifier.isStatic(mod) && 
                 !Modifier.isFinal(mod) &&
-                !Modifier.isPublic(mod) &&
                 !Modifier.isTransient(mod) &&
                 !Modifier.isVolatile(mod)
                 );
