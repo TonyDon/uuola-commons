@@ -37,7 +37,7 @@ public abstract class BeanUtil {
         String key = clazz.getCanonicalName()+"%"+target.getCanonicalName();
         BeanCopier copier = cacheCglibCopierMap.get(key);
         if (null == copier) {
-            cacheCglibCopierMap.putIfAbsent(key, BeanCopier.create(clazz, targetBean.getClass(), false));
+            cacheCglibCopierMap.putIfAbsent(key, BeanCopier.create(clazz, target, false));
             copier = cacheCglibCopierMap.get(clazz);
         }
         copier.copy(srcBean, targetBean, null);
