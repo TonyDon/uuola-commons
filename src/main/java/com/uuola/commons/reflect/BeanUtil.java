@@ -27,8 +27,8 @@ public abstract class BeanUtil {
     /**
      * 复制JAVABEAN属性到新对象
      * 
-     * @param to_obj
-     * @param from_obj
+     * @param srcBean
+     * @param targetBean
      * @throws Exception
      */
     public static void copyProperties(Object srcBean, Object targetBean){
