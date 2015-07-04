@@ -19,10 +19,10 @@ import net.sf.cglib.beans.BeanCopier;
  * 创建日期: 2013-12-22
  * </pre>
  */
-public class BeanUtil {
+public abstract class BeanUtil {
 
     // 缓存cglib的beanCopier 避免反复创建
-    private static ConcurrentMap<Class<?>, BeanCopier> cacheCglibCopierMap = new ConcurrentHashMap<Class<?>, BeanCopier>();
+    private static ConcurrentMap<String, BeanCopier> cacheCglibCopierMap = new ConcurrentHashMap<String, BeanCopier>();
 
     /**
      * 复制JAVABEAN属性到新对象
@@ -33,9 +33,11 @@ public class BeanUtil {
      */
     public static void copyProperties(Object srcBean, Object targetBean){
         Class<?> clazz = srcBean.getClass();
-        BeanCopier copier = cacheCglibCopierMap.get(clazz);
+        Class<?> target = targetBean.getClass();
+        String key = clazz.getCanonicalName()+"%"+target.getCanonicalName();
+        BeanCopier copier = cacheCglibCopierMap.get(key);
         if (null == copier) {
-            cacheCglibCopierMap.putIfAbsent(clazz, BeanCopier.create(clazz, targetBean.getClass(), false));
+            cacheCglibCopierMap.putIfAbsent(key, BeanCopier.create(clazz, targetBean.getClass(), false));
             copier = cacheCglibCopierMap.get(clazz);
         }
         copier.copy(srcBean, targetBean, null);
