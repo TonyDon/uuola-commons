@@ -6,6 +6,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 
 import com.uuola.commons.DateUtil;
 import com.uuola.commons.coder.DES;
+import com.uuola.commons.coder.DESede;
 import com.uuola.commons.coder.KeyGenerator;
 import com.uuola.commons.coder.Md5;
 import com.uuola.commons.coder.SHA;
@@ -40,6 +41,8 @@ public class CodeTest {
         System.out.println(DateUtil.formatTimeMillis(System.currentTimeMillis() * 5, CST_DATE_FORMAT.YYYYMMDDHHMMSSSSS));
         System.out.println(SHA.encode("你好"));
         System.out.println(DigestUtils.sha1Hex("你好"));
+        System.out.println(DESede.encrypt("440ee0853ad1e99f962b63e459ef992d7c211722", "123456781234567812345678"));
+        System.out.println(DESede.encrypt("92429d82a41e930486c6de5ebda9602d55c39986", "123456781234567812345678"));
     }
 
 }
