@@ -2,10 +2,13 @@ package com.uuola.txcms.util.test;
 
 import java.util.UUID;
 
+import org.apache.commons.codec.digest.DigestUtils;
+
 import com.uuola.commons.DateUtil;
 import com.uuola.commons.coder.DES;
 import com.uuola.commons.coder.KeyGenerator;
 import com.uuola.commons.coder.Md5;
+import com.uuola.commons.coder.SHA;
 import com.uuola.commons.constant.CST_DATE_FORMAT;
 
 
@@ -35,6 +38,8 @@ public class CodeTest {
         System.out.println(KeyGenerator.getRndChr(2).toLowerCase()+UUID.randomUUID().toString());
         System.out.println(System.currentTimeMillis());
         System.out.println(DateUtil.formatTimeMillis(System.currentTimeMillis() * 5, CST_DATE_FORMAT.YYYYMMDDHHMMSSSSS));
+        System.out.println(SHA.encode("你好"));
+        System.out.println(DigestUtils.sha1Hex("你好"));
     }
 
 }
