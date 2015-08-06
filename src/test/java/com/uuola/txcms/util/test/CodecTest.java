@@ -16,6 +16,7 @@ import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.digest.Crypt;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.io.IOUtils;
 
 import com.uuola.commons.coder.MyBase64;
 import com.uuola.commons.coder.SHA;
@@ -46,8 +47,9 @@ public class CodecTest {
         System.out.println(Crypt.crypt("abc"));
         
         try {
-            fileSHA1();
-            fileMD5();
+//            fileSHA1();
+//            fileMD5();
+            base64Image();
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -64,6 +66,14 @@ public class CodecTest {
     private static void fileMD5() throws FileNotFoundException, IOException{
         File inputFile = new File("G:\\Downloads\\golang\\go1.4.windows-386.zip");
         String hex = DigestUtils.md5Hex(new BufferedInputStream(new FileInputStream(inputFile)));
+        System.out.println(hex);
+    }
+    
+    private static void base64Image() throws FileNotFoundException, IOException{
+        File inputFile = new File("C:\\eca72374ae68a1032dde.jpg");
+        byte[] buffer = new byte[(int)inputFile.length()];
+        IOUtils.read(new BufferedInputStream(new FileInputStream(inputFile)), buffer);
+        String hex = Base64.encodeBase64String(buffer);
         System.out.println(hex);
     }
 
