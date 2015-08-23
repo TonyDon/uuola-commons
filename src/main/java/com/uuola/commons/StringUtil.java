@@ -6,12 +6,16 @@
 
 package com.uuola.commons;
 
+import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.Collection;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
 
 import com.uuola.commons.constant.CST_CHAR;
+import com.uuola.commons.constant.CST_ENCODING;
 import com.uuola.commons.constant.CST_REGEX;
 
 /**
@@ -141,6 +145,32 @@ public  abstract class StringUtil {
         } else {
             return val.trim();
         }
+    }
+    
+    /**
+     * 将Map<String,Object>转为请求查询串<br/>
+     * 如果MAP为空或无元素侧返回null
+     *
+     * @param params
+     * @return
+     * @throws IOException 
+     */
+    public static String parseQueryText(Map<String, Object> params) {
+        if (params == null || params.isEmpty()) {
+            return null;
+        }
+        StringBuilder sb = new StringBuilder();
+        try {
+            for (Map.Entry<String, Object> parVal : params.entrySet()) {
+                sb.append(parVal.getKey()).append(CST_CHAR.STR_EQUAL)
+                        .append(URLEncoder.encode(String.valueOf(parVal.getValue()), CST_ENCODING.UTF8))
+                        .append(CST_CHAR.STR_AND);
+
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return sb.deleteCharAt(sb.length() - 1).toString();
     }
 
     public static String[] split(String ids, char c) {

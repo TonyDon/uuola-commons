@@ -38,4 +38,5 @@ public class CST_CHAR {
     public static final String STR_QUESTION="?";
     public static final String STR_EMPTY = "";
     public static final String STR_LFCR = "\n\r";
+    public static final String STR_CRLF = "\r\n";
 }
