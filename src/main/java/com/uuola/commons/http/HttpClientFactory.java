@@ -46,7 +46,7 @@ public class HttpClientFactory {
         return cm;
     }
     
-    public CloseableHttpClient getHttpClient(){
+    public static CloseableHttpClient getHttpClient(){
         return HttpClients.custom().setConnectionManager(hccm).build();
     }
     
