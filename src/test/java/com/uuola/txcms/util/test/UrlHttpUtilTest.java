@@ -7,14 +7,19 @@
 package com.uuola.txcms.util.test;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.protocol.HttpClientContext;
+import org.apache.http.impl.client.CloseableHttpClient;
 import org.junit.Test;
 
 import com.uuola.commons.StringUtil;
+import com.uuola.commons.http.HttpClientUtil;
 import com.uuola.commons.http.HttpUtil;
 
 
@@ -61,5 +66,30 @@ public class UrlHttpUtilTest {
         params.put("bbb", "唐晓东aabb");
         String ret = HttpUtil.doPost("http://www.uuola.com/txcms-web/get.jsp", "utf-8", null, null, headers, params);
         System.out.println(ret);
+    }
+    
+    //@Test
+    public void test_httpclient_1(){
+        long t1 = System.currentTimeMillis();
+        CloseableHttpClient hc = HttpClientUtil.getDefaultHttpClient();
+        HttpClientContext context = HttpClientContext.create();
+        HttpGet get = new HttpGet("http://00.uuola.com/txcms-web/get.jsp?bbb=a");
+        get.setConfig(HttpClientUtil.getRequestConfig());
+        
+        try {
+            hc.execute(get, context);
+        }catch(Exception e) {
+            e.printStackTrace();
+        }finally{
+            try {
+                hc.close();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+        
+        //HttpUtil.doGet("http://www.uuola.com/txcms-web/get.jsp?bbb=a", "utf-8", null, null, null);
+        System.out.println(System.currentTimeMillis()-t1);
     }
 }
