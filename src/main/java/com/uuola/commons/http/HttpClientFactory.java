@@ -23,11 +23,9 @@ import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
  * 创建日期: 2015年1月18日
  * </pre>
  */
-public class HttpClientFactory {
+public abstract class HttpClientFactory {
 
-    private static PoolingHttpClientConnectionManager hccm = create();
-    
-    private static PoolingHttpClientConnectionManager create(){
+    public static PoolingHttpClientConnectionManager create(){
         PoolingHttpClientConnectionManager cm = new PoolingHttpClientConnectionManager(1L, TimeUnit.HOURS);
         cm.setMaxTotal(100);
         cm.setDefaultMaxPerRoute(10);
@@ -40,14 +38,17 @@ public class HttpClientFactory {
                 .setSoReuseAddress(false).build();
         cm.setDefaultSocketConfig(socketConfig);
         
-        ConnectionConfig connConfig = ConnectionConfig.custom()
-                .setCharset(Consts.UTF_8).build();
+        ConnectionConfig connConfig = ConnectionConfig.custom().setCharset(Consts.UTF_8).build();
         cm.setDefaultConnectionConfig(connConfig);
         return cm;
     }
     
+    /**
+     * 得到 连接池100，SOCKET超时60S的 HTTP CLIENT，
+     * @return
+     */
     public static CloseableHttpClient getHttpClient(){
-        return HttpClients.custom().setConnectionManager(hccm).build();
+        return HttpClients.custom().setConnectionManager(create()).build();
     }
     
 }

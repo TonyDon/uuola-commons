@@ -24,6 +24,7 @@ import com.uuola.commons.CollectionUtil;
 import com.uuola.commons.StringUtil;
 import com.uuola.commons.coder.KeyGenerator;
 import com.uuola.commons.constant.CST_CHAR;
+import com.uuola.commons.constant.CST_ENCODING;
 
 
 /**
@@ -33,9 +34,9 @@ import com.uuola.commons.constant.CST_CHAR;
  * 创建日期: 2015年8月23日
  * </pre>
  */
-public abstract class UrlHttpUtil {
+public abstract class HttpUtil {
     
-    private static Logger log = LoggerFactory.getLogger(UrlHttpUtil.class);
+    private static Logger log = LoggerFactory.getLogger(HttpUtil.class);
     
 
     public static final int TIME_OUT = 8000;
@@ -47,16 +48,19 @@ public abstract class UrlHttpUtil {
      * @param charset
      * @param connectTimeout
      * @param readTimeout
+     * @param headers
      * @return String
      *
      */
-    public static String doGet(String siteUrl, String charset, Integer connectTimeout, Integer readTimeout) {
+    public static String doGet(String siteUrl, String charset, Integer connectTimeout, Integer readTimeout, Map<String, Object> headers) {
         String content = null;
         BufferedInputStream bis = null;
         HttpURLConnection urlconn = null;
         try {
             urlconn = (HttpURLConnection) (new URL(siteUrl)).openConnection();
+            urlconn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded; charset=".concat(charset));
             setCommonRequestProperty(urlconn, "GET", charset, connectTimeout, readTimeout);
+            setRequestHeader(urlconn, headers);
             urlconn.connect();
             if (urlconn.getResponseCode() == HttpURLConnection.HTTP_OK) {
                 bis = new BufferedInputStream(urlconn.getInputStream());
@@ -78,21 +82,22 @@ public abstract class UrlHttpUtil {
      * 简单的POST请求，使用application/x-www-form-urlencoded
      * @param postUrl
      * @param charset
+     * @param headers
      * @param params
      * @param connectTimeout
      * @param readTimeout
      * @return
      */
-    public static String doPost(String postUrl, String charset, Map<String, Object> params,
-            Integer connectTimeout, Integer readTimeout) {
+    public static String doPost(String postUrl, String charset, Integer connectTimeout, Integer readTimeout, Map<String, Object> headers, Map<String, Object> params) {
         String content = null;
         BufferedInputStream bis = null;
         DataOutputStream dos = null;
         HttpURLConnection urlconn = null;
         try {
             urlconn = (HttpURLConnection) (new URL(postUrl)).openConnection();
-            urlconn.setInstanceFollowRedirects(true);
+            urlconn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded; charset=".concat(charset));
             setCommonRequestProperty(urlconn, "POST", charset, connectTimeout, readTimeout);
+            setRequestHeader(urlconn, headers);
             urlconn.connect();
             dos = new DataOutputStream(urlconn.getOutputStream());
             dos.writeBytes(StringUtil.parseQueryText(params));
@@ -133,20 +138,10 @@ public abstract class UrlHttpUtil {
         HttpURLConnection urlconn = null;
         try {
             urlconn = (HttpURLConnection) (new URL(postUrl)).openConnection();
-            urlconn.setInstanceFollowRedirects(true);
-            urlconn.setConnectTimeout(connectTimeout == null ? TIME_OUT : connectTimeout);
-            urlconn.setReadTimeout(readTimeout == null ? TIME_OUT : readTimeout);
-            urlconn.setDoOutput(true);
-            urlconn.setDoInput(true);
-            urlconn.setUseCaches(false);
-            urlconn.setRequestMethod("POST");
             urlconn.setRequestProperty("Content-length", String.valueOf(body.length)); 
             urlconn.setRequestProperty("Content-Type", "application/octet-stream"); 
             urlconn.setRequestProperty("Connection", "Keep-Alive");
-            urlconn.setRequestProperty("Charset", "UTF-8"); 
-            urlconn.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 5.1; rv:16.0) Gecko/20100101 Firefox/16.0");
-            urlconn.setRequestProperty("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
-            urlconn.setRequestProperty("Accept-Language", "zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3");
+            setCommonRequestProperty(urlconn, "POST", charset, connectTimeout, readTimeout);
             setRequestHeader(urlconn, headers);
             urlconn.connect();
             dos = new DataOutputStream(urlconn.getOutputStream());
@@ -175,11 +170,10 @@ public abstract class UrlHttpUtil {
      * @param headers
      */
     public static void setRequestHeader(HttpURLConnection urlconn, Map<String, Object> headers) {
-        if (CollectionUtil.isEmpty(headers)) {
-            return;
-        }
-        for (Map.Entry<String, Object> parVal : headers.entrySet()) {
-            urlconn.setRequestProperty(parVal.getKey(), String.valueOf(parVal.getValue()));
+        if (CollectionUtil.isNotEmpty(headers)) {
+            for (Map.Entry<String, Object> parVal : headers.entrySet()) {
+                urlconn.setRequestProperty(parVal.getKey(), String.valueOf(parVal.getValue()));
+            }
         }
     }
 
@@ -202,19 +196,9 @@ public abstract class UrlHttpUtil {
         String BOUNDARY_LINE = "----------uuola".concat(KeyGenerator.getRndChr(8)); // 定义数据分隔线
         try {
             urlconn = (HttpURLConnection) (new URL(postUrl)).openConnection();
-            urlconn.setInstanceFollowRedirects(true);
-            urlconn.setConnectTimeout(connectTimeout == null ? TIME_OUT : connectTimeout);
-            urlconn.setReadTimeout(readTimeout == null ? TIME_OUT : readTimeout);
-            urlconn.setDoOutput(true);
-            urlconn.setDoInput(true);
-            urlconn.setUseCaches(false);
-            urlconn.setRequestMethod("POST");
             urlconn.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + BOUNDARY_LINE); 
             urlconn.setRequestProperty("Connection", "Keep-Alive");
-            urlconn.setRequestProperty("Charset", "UTF-8"); 
-            urlconn.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 5.1; rv:16.0) Gecko/20100101 Firefox/16.0");
-            urlconn.setRequestProperty("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
-            urlconn.setRequestProperty("Accept-Language", "zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3");
+            setCommonRequestProperty(urlconn, "POST", charset, connectTimeout, readTimeout);
             setRequestHeader(urlconn, headers);
             urlconn.connect();
             dos = new DataOutputStream(urlconn.getOutputStream());
@@ -258,8 +242,8 @@ public abstract class UrlHttpUtil {
                     fillFileData(name, file, boundaryLine, dos);
                 }
             }
-            dos.write(parLine.toString().getBytes());
-            dos.writeBytes("--".concat(boundaryLine).concat("--").concat(CST_CHAR.STR_CRLF));
+            dos.write(parLine.toString().getBytes(CST_ENCODING.UTF8));
+            dos.write(("--".concat(boundaryLine).concat("--").concat(CST_CHAR.STR_CRLF)).getBytes(CST_ENCODING.UTF8));
         } catch (Exception e) {
             log.error("fillRequestBody()", e);
         }
@@ -273,10 +257,10 @@ public abstract class UrlHttpUtil {
           .append("filename=\"").append(file.getName()).append("\"").append(CST_CHAR.STR_CRLF)
           .append("Content-Type: application/octet-stream")
           .append(CST_CHAR.STR_CRLF).append(CST_CHAR.STR_CRLF);
-        dos.write(sb.toString().getBytes());
+        dos.write(sb.toString().getBytes(CST_ENCODING.UTF8));
         DataInputStream in = new DataInputStream(new FileInputStream(file));
         int bytes = 0;
-        byte[] buff = new byte[1024];
+        byte[] buff = new byte[2048];
         while ((bytes = in.read(buff)) != -1){
             dos.write(buff, 0, bytes);
         }
@@ -298,13 +282,14 @@ public abstract class UrlHttpUtil {
             String charset, Integer connectTimeout, Integer readTimeout) throws Exception {
         urlconn.setConnectTimeout(connectTimeout == null ? TIME_OUT : connectTimeout);
         urlconn.setReadTimeout(readTimeout == null ? TIME_OUT : readTimeout);
+        urlconn.setInstanceFollowRedirects(true);
         urlconn.setDoOutput(true);
         urlconn.setDoInput(true);
         urlconn.setUseCaches(false);
         urlconn.setRequestMethod(reqMethod);
-        urlconn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=".concat(charset));
         urlconn.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 5.1; rv:16.0) Gecko/20100101 Firefox/16.0");
-        urlconn.setRequestProperty("Accept", "*/*");
+        urlconn.setRequestProperty("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
         urlconn.setRequestProperty("Accept-Language", "zh-cn,zh;q=0.8,en-us;q=0.5,en;q=0.3");
+        urlconn.setRequestProperty("Charset", charset);
     }
 }
