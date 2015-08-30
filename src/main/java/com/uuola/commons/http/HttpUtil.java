@@ -272,10 +272,10 @@ public abstract class HttpUtil {
     /**
      * 
      * @param urlconn
-     * @param reqMethod
-     * @param charset
-     * @param connectTimeout
-     * @param readTimeout
+     * @param reqMethod 请求方法
+     * @param charset 编码
+     * @param connectTimeout 连接超时毫秒数
+     * @param readTimeout 读取数据超时毫秒数
      * @throws Exception
      */
     public static void setCommonRequestProperty(HttpURLConnection urlconn, String reqMethod,
