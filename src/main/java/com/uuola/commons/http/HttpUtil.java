@@ -274,8 +274,8 @@ public abstract class HttpUtil {
      * @param urlconn
      * @param reqMethod 请求方法
      * @param charset 编码
-     * @param connectTimeout 连接超时毫秒数
-     * @param readTimeout 读取数据超时毫秒数
+     * @param connectTimeout 建立连接到目标地址的超时毫秒数
+     * @param readTimeout 连接到目标地址后，开始读取数据超时的毫秒数
      * @throws Exception
      */
     public static void setCommonRequestProperty(HttpURLConnection urlconn, String reqMethod,
