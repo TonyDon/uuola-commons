@@ -40,11 +40,10 @@ public abstract class ZipUtil {
      * @param charset 
      * @return
      */
-    public static boolean unpack(File zipFile, File outDir, String charset) {
+    public static void unpack(File zipFile, File outDir, String charset) {
         if (!zipFile.exists() || !zipFile.canRead() || !outDir.exists() || !outDir.isDirectory()) {
-            return false;
+            throw new RuntimeException("zipFile or outDir - can not be read or not exist!");
         }
-        boolean result = true;
         ZipFile zip = null;
         try {
             zip = new ZipFile(zipFile, Charset.forName(charset));
@@ -67,11 +66,10 @@ public abstract class ZipUtil {
                 }
             }
         } catch (Exception e) {
-            result = false;
+            throw new RuntimeException(e);
         } finally {
             IOUtils.closeQuietly(zip);
         }
-        return result;
     }
     
     /**
