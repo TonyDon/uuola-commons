@@ -80,7 +80,7 @@ public class SequenceBuilder {
             // 更新之前的更新时间种子为最新时间戳
             beforeTimeSeeds = newTimeSeeds;  
         } catch (Exception e) {
-            log.error("", e.toString());
+            log.error("SequenceBuilder.getSid()", e);
             id = Long.MIN_VALUE;
         } finally {
             lock.unlock();
