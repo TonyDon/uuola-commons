@@ -92,8 +92,8 @@ public abstract class HttpUtil {
      * @param headers
      * @return
      */
-    public static byte[] doGetForBytes(String siteUrl, String charset, Integer connectTimeout, Integer readTimeout, Map<String, Object> headers){
-        byte[] data = null;
+    public static ByteBuffer doGetForBytes(String siteUrl, String charset, Integer connectTimeout, Integer readTimeout, Map<String, Object> headers){
+        ByteBuffer data = null;
         InputStream ds = null;
         InputStream is = null;
         HttpURLConnection urlconn = null;
@@ -108,8 +108,7 @@ public abstract class HttpUtil {
                 String encoding = urlconn.getContentEncoding();
                 is = null != encoding && encoding.toLowerCase().contains("gzip") ? new BufferedInputStream(
                         new GZIPInputStream(ds)) : new BufferedInputStream(ds);
-                ByteBuffer byteBuff = readToByteBuffer(is, BUFF_SIZE * 4);
-                data = byteBuff.array();
+                data = readToByteBuffer(is, BUFF_SIZE * 4);
             }
         } catch (Exception e) {
             log.error("doGetForBytes()", e);
