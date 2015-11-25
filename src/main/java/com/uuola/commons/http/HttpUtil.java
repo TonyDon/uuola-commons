@@ -7,14 +7,18 @@
 package com.uuola.commons.http;
 
 import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.ByteBuffer;
 import java.util.Map;
+import java.util.zip.GZIPInputStream;
 
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -40,6 +44,8 @@ public abstract class HttpUtil {
     
 
     public static final int TIME_OUT = 8000;
+    
+    private static final int BUFF_SIZE = 1024*32;
 
     /**
      * 简单的Get请求， application/x-www-form-urlencoded
@@ -75,6 +81,75 @@ public abstract class HttpUtil {
             }
         }
         return content;
+    }
+    
+    /**
+     * GET 请求返回字节数组
+     * @param siteUrl
+     * @param charset
+     * @param connectTimeout
+     * @param readTimeout
+     * @param headers
+     * @return
+     */
+    public static byte[] doGetForBytes(String siteUrl, String charset, Integer connectTimeout, Integer readTimeout, Map<String, Object> headers){
+        byte[] data = null;
+        InputStream ds = null;
+        InputStream is = null;
+        HttpURLConnection urlconn = null;
+        try {
+            urlconn = (HttpURLConnection) (new URL(siteUrl)).openConnection();
+            urlconn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded; charset=".concat(charset));
+            setCommonRequestProperty(urlconn, "GET", charset, connectTimeout, readTimeout);
+            setRequestHeader(urlconn, headers);
+            urlconn.connect();
+            if (urlconn.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                ds = urlconn.getErrorStream() != null ? urlconn.getErrorStream() : urlconn.getInputStream();
+                String encoding = urlconn.getContentEncoding();
+                is = null != encoding && encoding.toLowerCase().contains("gzip") ? new BufferedInputStream(
+                        new GZIPInputStream(ds)) : new BufferedInputStream(ds);
+                ByteBuffer byteBuff = readToByteBuffer(is, BUFF_SIZE * 4);
+                data = byteBuff.array();
+            }
+        } catch (Exception e) {
+            log.error("doGetForBytes()", e);
+        } finally {
+            IOUtils.closeQuietly(is);
+            IOUtils.closeQuietly(ds);
+            if (urlconn != null) {
+                urlconn.disconnect();
+            }
+        }
+        return data;
+    }
+    
+    /**
+     * 将inputStream 转换到字节缓存对象中
+     * @param is
+     * @param maxSize
+     * @return
+     * @throws IOException
+     */
+    public static ByteBuffer readToByteBuffer(InputStream is, int maxSize) throws IOException {
+        final boolean capped = maxSize > 0;
+        byte[] buffer = new byte[BUFF_SIZE];
+        ByteArrayOutputStream outStream = new ByteArrayOutputStream(BUFF_SIZE);
+        int read;
+        int remaining = maxSize;
+        while (true) {
+            read = is.read(buffer);
+            if (read == -1) break;
+            if (capped) {
+                if (read > remaining) {
+                    outStream.write(buffer, 0, remaining);
+                    break;
+                }
+                remaining -= read;
+            }
+            outStream.write(buffer, 0, read);
+        }
+        ByteBuffer byteData = ByteBuffer.wrap(outStream.toByteArray());
+        return byteData;
     }
     
     
