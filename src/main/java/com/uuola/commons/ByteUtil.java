@@ -36,7 +36,7 @@ public abstract class ByteUtil {
         ByteArrayOutputStream outStream = new ByteArrayOutputStream(BUFF_SIZE);
         int read;
         int remaining = maxSize;
-        while (true) {
+        for(;;) {
             read = is.read(buffer);
             if (read == -1) break;
             if (capped) {
