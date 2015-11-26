@@ -7,7 +7,6 @@
 package com.uuola.commons.http;
 
 import java.io.BufferedInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
@@ -24,6 +23,7 @@ import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.uuola.commons.ByteUtil;
 import com.uuola.commons.CollectionUtil;
 import com.uuola.commons.StringUtil;
 import com.uuola.commons.coder.KeyGenerator;
@@ -45,7 +45,7 @@ public abstract class HttpUtil {
 
     public static final int TIME_OUT = 8000;
     
-    private static final int BUFF_SIZE = 1024*32;
+    
 
     /**
      * 简单的Get请求， application/x-www-form-urlencoded
@@ -108,7 +108,7 @@ public abstract class HttpUtil {
                 String encoding = urlconn.getContentEncoding();
                 is = null != encoding && encoding.toLowerCase().contains("gzip") ? new BufferedInputStream(
                         new GZIPInputStream(ds)) : new BufferedInputStream(ds);
-                data = readToByteBuffer(is, BUFF_SIZE * 4);
+                data = ByteUtil.readToByteBuffer(is, ByteUtil.BUFF_SIZE * 4);
             }
         } catch (Exception e) {
             log.error("doGetForBytes()", e);
@@ -122,35 +122,7 @@ public abstract class HttpUtil {
         return data;
     }
     
-    /**
-     * 将inputStream 转换到字节缓存对象中
-     * @param is
-     * @param maxSize
-     * @return
-     * @throws IOException
-     */
-    public static ByteBuffer readToByteBuffer(InputStream is, int maxSize) throws IOException {
-        final boolean capped = maxSize > 0;
-        byte[] buffer = new byte[BUFF_SIZE];
-        ByteArrayOutputStream outStream = new ByteArrayOutputStream(BUFF_SIZE);
-        int read;
-        int remaining = maxSize;
-        while (true) {
-            read = is.read(buffer);
-            if (read == -1) break;
-            if (capped) {
-                if (read > remaining) {
-                    outStream.write(buffer, 0, remaining);
-                    break;
-                }
-                remaining -= read;
-            }
-            outStream.write(buffer, 0, read);
-        }
-        ByteBuffer byteData = ByteBuffer.wrap(outStream.toByteArray());
-        return byteData;
-    }
-    
+
     
     /**
      * 简单的POST请求，使用application/x-www-form-urlencoded
