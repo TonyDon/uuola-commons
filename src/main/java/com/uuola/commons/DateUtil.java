@@ -106,5 +106,33 @@ public  abstract class DateUtil {
     public static Date parseDate(long timeMillis){
         return new Date(timeMillis);
     }
+    
+    /**
+     * 对时间相关字段进行数值增加、减少操作
+     * @param date
+     * @param calendarField
+     * @param amount
+     * @return modify date, 原时间对象不变
+     */
+    private static Date add(Date date, int calendarField, int amount) {
+        if (date == null) {
+            throw new IllegalArgumentException("The date must not be null");
+        }
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        c.add(calendarField, amount);
+        return c.getTime();
+    }
+    
+    /**
+     * 对时间天数字段进行数值增加、减少操作
+     * @param date
+     * @param calendarField
+     * @param amount 
+     * @return modify date, 原时间对象不变
+     */
+    public static Date addDays(Date date, int amount) {
+        return add(date, Calendar.DAY_OF_MONTH, amount);
+    }
 
 }
