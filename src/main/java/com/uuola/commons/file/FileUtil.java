@@ -105,6 +105,14 @@ public final class FileUtil {
             return false;
         }
     }
+    
+    /**
+     * 静默模式删除文件或目录
+     * @param path
+     */
+    public static void delete(File path){
+        FileUtils.deleteQuietly(path);
+    }
 
     /*
      * 遍历删除一个目录返回删除的目录和文件总数
