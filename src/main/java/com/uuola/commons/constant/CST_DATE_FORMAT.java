@@ -12,4 +12,5 @@ public class CST_DATE_FORMAT {
     public static final String HHMMSS = "HHmmss";
     public static final String YYYY_MM_DD = "yyyy-MM-dd";
     public static final String YYYYMMDD = "yyyyMMdd";
+    public static final String YYYYsMMsDD = "yyyy/MM/dd";
 }
