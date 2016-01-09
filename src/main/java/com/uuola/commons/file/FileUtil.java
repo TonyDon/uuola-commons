@@ -32,8 +32,11 @@ public final class FileUtil {
      * @see 创建不存在的目录
      */
     public static boolean createNoExistsDirs(String path) {
-        File dirs = new File(path);
-        if (dirs.exists()) {
+        return createNoExistsDirs(new File(path));
+    }
+    
+    public static boolean createNoExistsDirs(File dirs) {
+        if (null !=dirs && dirs.exists()) {
             return true;
         }
         try {
@@ -49,22 +52,12 @@ public final class FileUtil {
      * @see 生成多级目录
      */
     public static boolean createDirs(String path) {
-        try {
-            FileUtils.forceMkdir(new File(path));
-            return true;
-        } catch (IOException ex) {
-            logger.error(ex.toString());
-            return false;
-        }
+        return createDirs(new File(path));
     }
-
-    /*
-     * @see 创建一个目录
-     */
-
-    public static boolean createDir(String path) {
+    
+    public static boolean createDirs(File dirs) {
         try {
-            FileUtils.forceMkdir(new File(path));
+            FileUtils.forceMkdir(dirs);
             return true;
         } catch (IOException ex) {
             logger.error(ex.toString());
