@@ -254,9 +254,13 @@ public final class FileUtil {
     }
 
     public static boolean writeStringToFile(String path, String s, String encoding) {
+        return writeStringToFile(new File(path), s, encoding);
+    }
+    
+    public static boolean writeStringToFile(File file, String s, String encoding) {
         boolean flag = true;
         try {
-            FileUtils.writeStringToFile(new File(path), s, encoding);
+            FileUtils.writeStringToFile(file, s, encoding);
         } catch (IOException ex) {
             logger.error(ex.toString());
             flag = false;
