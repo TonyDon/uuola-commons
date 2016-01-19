@@ -87,11 +87,8 @@ public class ImageVerifier {
                 for (int k = 1; k <= actualCircleTimes; k++) {
                     g2d.setColor(fontColors[genInt(0, fontColrLen)]);
                     drawNoisePoint(g2d, xb, xe, yb, ye);
-                    g2d.setColor(fontColors[genInt(0, fontColrLen)]);
                     drawNoisePoint(g2d, xb, xe, yb, ye);
-                    g2d.setColor(fontColors[genInt(0, fontColrLen)]);
                     drawNoisePoint(g2d, xb, xe, yb, ye);
-                    g2d.setColor(fontColors[genInt(0, fontColrLen)]);
                     drawNoisePoint(g2d, xb, xe, yb, ye);
                 }
             } else {
