@@ -12,11 +12,13 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStream;
 
 import com.uuola.commons.NumberUtil;
 import com.uuola.commons.image.ImageUtil;
-import com.uuola.commons.image.ImageVerifier;
+import com.uuola.commons.image.checkcode.ImageCodeParams;
+import com.uuola.commons.image.checkcode.ImageVerifier;
 
 
 /**
@@ -33,11 +35,11 @@ public class ImageTest {
      * @throws FileNotFoundException 
      */
     public static void main(String[] args) throws Exception {
-        test5();
+        test1();
     }
     
     private static void test5(){
-        File srcFile =new File("f:/temp/20120921002239.jpg");
+        File srcFile =new File("f:/temp/f.jpg");
         File mark = new File("f:/temp/google.jpg");
         
         ImageUtil.pressImage(srcFile, mark, 0.5f);
@@ -89,9 +91,20 @@ public class ImageTest {
                 new Font("Arial", Font.PLAIN|Font.ITALIC, 32)
             };
         OutputStream imageOS = new BufferedOutputStream(new FileOutputStream(new File("C:\\captcha.png")));
-        ImageVerifier.outputImage(130, 45, 32, 100, true, true, 
-                fontcolor, bgcolor, true, false, "0987AB",
-                font[NumberUtil.genRndInt(0, 2)], "png", imageOS);
+        ImageCodeParams param = new ImageCodeParams("0987AB");
+        param.setWidth(130).setHeight(45).setCharBoxSize(32).setPointNum(100).setRotate(true)
+        .setMixedColor(true).setFontColors(fontcolor).setBackgroundColors(bgcolor)
+        .setDrawArc(true).setDrawLine(false).setOutputStream(imageOS)
+        .setFont(font[NumberUtil.genRndInt(0, 2)]);
+        
+        ImageVerifier.outputImage(param);
+        try {
+            imageOS.flush();
+            imageOS.close();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
 }
