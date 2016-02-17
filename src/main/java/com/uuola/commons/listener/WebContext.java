@@ -51,7 +51,7 @@ public class WebContext implements ServletContextListener {
         }
         String realPath = sct.getRealPath(path);
         if (realPath == null) {
-            logger.info("ServletContext resource [" + path + "] cannot be resolved to absolute file path.");
+            logger.warn("ServletContext resource [" + path + "] cannot be resolved to absolute file path.");
         }
         return realPath;
     }
