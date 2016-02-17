@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
  */
 public class WebContext implements ServletContextListener {
 
-    protected Logger logger = LoggerFactory.getLogger(getClass());
+    protected static Logger logger = LoggerFactory.getLogger(WebContext.class);
 
     private static ServletContext sct;
 
@@ -46,7 +46,14 @@ public class WebContext implements ServletContextListener {
      * @return
      */
     public static String getRealPath(String path) {
-        return sct.getRealPath(path);
+        if (!path.startsWith("/")) {
+            path = "/" + path;
+        }
+        String realPath = sct.getRealPath(path);
+        if (realPath == null) {
+            logger.info("ServletContext resource [" + path + "] cannot be resolved to absolute file path.");
+        }
+        return realPath;
     }
 
     /**
