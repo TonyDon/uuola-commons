@@ -134,5 +134,48 @@ public  abstract class DateUtil {
     public static Date addDays(Date date, int amount) {
         return add(date, Calendar.DAY_OF_MONTH, amount);
     }
+    
+    /**
+     * 得到年份
+     * @param cal
+     * @return
+     */
+    public static int getYear(Calendar cal){
+        return cal.get(Calendar.YEAR);
+    }
+    
+    /**
+     * 得到月份
+     * @param cal
+     * @return
+     */
+    public static int getMonth(Calendar cal){
+        return cal.get(Calendar.MONTH)+1;
+    }
+    
+    /**
+     * 得到月中的天
+     * @param cal
+     * @return
+     */
+    public static int getDay(Calendar cal){
+        return cal.get(Calendar.DAY_OF_MONTH);
+    }
+    
+    /**
+     * 得到当天在年份中的第多少天
+     * @param cal
+     * @return
+     */
+    public static int getDayInYear(Calendar cal){
+        return cal.get(Calendar.DAY_OF_YEAR);
+    }
 
+    public  static void main(String...strings ){
+        Calendar c = Calendar.getInstance();
+        System.out.println(getYear(c));
+        System.out.println(getMonth(c));
+        System.out.println(getDay(c));
+        System.out.println(getDayInYear(c));
+    }
 }
