@@ -30,6 +30,15 @@ public abstract class ObjectUtil {
     }
     
     /**
+     * 判断对象数组是否为空或空集合
+     * @param array
+     * @return
+     */
+    public static boolean isNotEmpty(Object[] array){
+        return !isEmpty(array);
+    }
+    
+    /**
      * 将数组对象Object中的集合对象拆解成单个元素组合到新的对象数组中，新对象数组不应有集合对象。
      * eg: args ={ "a", 123, array{1,2,3} , 1, "t"  , list{1,2}}
      * return : list{"a", 123, 1, 2, 3, 1, "t" , 1, 2}
