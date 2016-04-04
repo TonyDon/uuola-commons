@@ -68,7 +68,7 @@ public class UrlHttpUtilTest {
         System.out.println(ret);
     }
     
-    //@Test
+    @Test
     public void test_httpclient_1(){
         long t1 = System.currentTimeMillis();
         CloseableHttpClient hc = HttpClientUtil.getDefaultHttpClient();
