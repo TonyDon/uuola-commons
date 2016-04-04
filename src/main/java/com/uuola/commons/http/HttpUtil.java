@@ -89,14 +89,16 @@ public abstract class HttpUtil {
      * @param charset
      * @param connectTimeout
      * @param readTimeout
+     * @param maxSizeLimit 设置最大读取数据限制，0为不限制，为null时默认1M
      * @param headers
      * @return
      */
-    public static ByteBuffer doGetForBytes(String siteUrl, String charset, Integer connectTimeout, Integer readTimeout, Map<String, Object> headers){
+    public static ByteBuffer doGetForBytes(String siteUrl, String charset, Integer connectTimeout, Integer readTimeout, Integer maxSizeLimit, Map<String, Object> headers){
         ByteBuffer data = null;
         InputStream ds = null;
         InputStream is = null;
         HttpURLConnection urlconn = null;
+        int maxSize = maxSizeLimit == null ? ByteUtil.BUFF_SIZE * 32 : maxSizeLimit.intValue();
         try {
             urlconn = (HttpURLConnection) (new URL(siteUrl)).openConnection();
             urlconn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded; charset=".concat(charset));
@@ -108,7 +110,7 @@ public abstract class HttpUtil {
                 String encoding = urlconn.getContentEncoding();
                 is = null != encoding && encoding.toLowerCase().contains("gzip") ? new BufferedInputStream(
                         new GZIPInputStream(ds)) : new BufferedInputStream(ds);
-                data = ByteUtil.readToByteBuffer(is, ByteUtil.BUFF_SIZE * 4);
+                data = ByteUtil.readToByteBuffer(is, maxSize);
             }
         } catch (Exception e) {
             log.error("doGetForBytes()", e);

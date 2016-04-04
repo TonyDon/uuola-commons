@@ -26,7 +26,7 @@ public abstract class ByteUtil {
     /**
      * 将inputStream 转换到字节缓存对象中
      * @param is
-     * @param maxSize
+     * @param maxSize 最大读取尺寸限制
      * @return
      * @throws IOException
      */
