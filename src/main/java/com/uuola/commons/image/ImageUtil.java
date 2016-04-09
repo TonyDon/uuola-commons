@@ -354,7 +354,7 @@ public class ImageUtil {
      * @return
      */
     public static ImageInfo detect(File img){
-        if(null == img || !img.isFile() || !img.canRead()){
+        if(null == img || !img.exists() || !img.isFile() || !img.canRead()){
             return null;
         }
         ImageInfo info = new ImageInfo();
