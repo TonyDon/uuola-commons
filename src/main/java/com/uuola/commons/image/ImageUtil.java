@@ -21,10 +21,13 @@ import java.util.Iterator;
 
 import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
+import javax.imageio.ImageReader;
 import javax.imageio.ImageWriteParam;
 import javax.imageio.ImageWriter;
+import javax.imageio.stream.ImageInputStream;
 import javax.imageio.stream.ImageOutputStream;
 
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -317,7 +320,7 @@ public class ImageUtil {
         }
         return flag;
     }
-
+ 
     /*
      *  切图实现 
      * @param srcFile 源图片文件对象
@@ -343,5 +346,40 @@ public class ImageUtil {
             flag = false;
         }
         return flag;
+    }
+    
+    /**
+     * 探测图片文件信息，如类型，长宽，大小
+     * @param img
+     * @return
+     */
+    public static ImageInfo detect(File img){
+        if(null == img || !img.isFile() || !img.canRead()){
+            return null;
+        }
+        ImageInfo info = new ImageInfo();
+        info.setSize(img.length());
+        ImageInputStream iis = null;
+        try {
+            iis = ImageIO.createImageInputStream(img);
+            Iterator<ImageReader> iter = ImageIO.getImageReaders(iis);
+            if (!iter.hasNext()) {
+                logger.error(".detect() error. No readers found! file:" + img.getAbsolutePath());
+            }else{
+                ImageReader ird = iter.next();
+                ird.setInput(iis, true);
+                info.setWidth(ird.getWidth(0));
+                info.setHeight(ird.getHeight(0));
+                info.setFormatName(ird.getFormatName());
+                if(null != info.getFormatName()){
+                    info.setFormatName(info.getFormatName().toLowerCase());
+                }
+            }
+        } catch (IOException e) {
+            logger.error(".detect() error. ", e);
+        } finally{
+            IOUtils.closeQuietly(iis);
+        }
+        return info;
     }
 }
