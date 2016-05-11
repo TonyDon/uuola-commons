@@ -179,7 +179,8 @@ public class ImageUtil {
         if (!srcImg.exists() || !srcImg.canRead() || (width == 0 && height == 0)) {
             return false;
         }
-        File np = (newImg == null) ? srcImg : newImg;
+        boolean isCoverSrcImage = newImg == null ;
+        File np = isCoverSrcImage ? srcImg : newImg;
         BufferedImage bi;
         BufferedImage itemp;
         int ow, oh, x, y;
@@ -233,6 +234,10 @@ public class ImageUtil {
             }
 
             String ext = FileUtil.getFileExt(srcImg.getCanonicalPath());
+            // 覆盖原始文件
+            if(isCoverSrcImage){
+                srcImg.delete(); 
+            }
             // 单独处理 jpeg 图片
             if ("jpegjpg".contains(ext.toLowerCase())) {
                 ImageUtil.jpegHandle(image, np);
