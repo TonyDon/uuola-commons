@@ -49,7 +49,8 @@ public class CodecTest {
         try {
 //            fileSHA1();
 //            fileMD5();
-            base64Image();
+            //base64Image();
+            fileSHA256();
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -60,6 +61,12 @@ public class CodecTest {
     private static void fileSHA1() throws FileNotFoundException, IOException{
         File inputFile = new File("G:\\Downloads\\golang\\go1.4.windows-386.zip");
         String sha1Hex = DigestUtils.sha1Hex(new BufferedInputStream(new FileInputStream(inputFile)));
+        System.out.println(sha1Hex);
+    }
+    
+    private static void fileSHA256() throws FileNotFoundException, IOException{
+        File inputFile = new File("D:\\迅雷下载\\go1.6.2.windows-386.zip");
+        String sha1Hex = DigestUtils.sha256Hex(new BufferedInputStream(new FileInputStream(inputFile)));
         System.out.println(sha1Hex);
     }
     
