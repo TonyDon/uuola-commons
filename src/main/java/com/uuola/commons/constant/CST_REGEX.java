@@ -17,7 +17,7 @@ public class CST_REGEX {
     public static final Pattern RE_DATETIME_NOT_SS = Pattern.compile("(\\d{4})-(\\d{1,2})-(\\d{1,2}) (\\d{1,2}):(\\d{1,2})");
     public static final Pattern RE_DOUBLE = Pattern.compile("([\\d\\-]{1,15})\\.([0-9]{1,2})");
     public static final Pattern RE_TEL = Pattern.compile("((\\(\\d{2,3}\\))|(\\d{3}\\-))?(13|15|18)\\d{9}");
-    // 去掉 /* ... */ //... \n\r 注释
-    public static final Pattern RE_CLR_NOTE = Pattern.compile("(\\/\\*[\\s\\S]*?\\*\\/)|(\\/\\/.*[\n\r]{1,})");
+    // 去掉 /* ... */ //...  注释
+    public static final Pattern RE_CLR_NOTE = Pattern.compile("(/\\*[\\s\\S]*\\*/)|(\\s//.*)");
     public static final Pattern RE_CLR_XML = Pattern.compile("(<[.[^<]]*>)|\n|\r");
 }
