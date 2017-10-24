@@ -47,7 +47,7 @@ public class JdbcUtil {
         }
         ResultSetMetaData rsmd = rs.getMetaData();
         int colnum = rsmd.getColumnCount();
-        Map<String, Object> m = new HashMap<String, Object>(colnum);
+        Map<String, Object> m = new HashMap<String, Object>();
         for (int i = 1; i <= colnum; i++) {
             m.put(lookupColumnName(rsmd, i), rs.getObject(i));
         }
@@ -67,7 +67,7 @@ public class JdbcUtil {
         int colnum = rsmd.getColumnCount();
         List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
         while (rs.next()) {
-            Map<String, Object> m = new HashMap<String, Object>(colnum);
+            Map<String, Object> m = new HashMap<String, Object>();
             for (int i = 1; i <= colnum; i++) {
                 m.put(lookupColumnName(rsmd, i), rs.getObject(i));
             }
@@ -231,20 +231,14 @@ public class JdbcUtil {
         // Explicitly extract typed value, as far as possible.
         if (String.class.equals(requiredType)) {
             value = rs.getString(index);
-        } else if (boolean.class.equals(requiredType) || Boolean.class.equals(requiredType)) {
-            value = rs.getBoolean(index);
-            wasNullCheck = true;
-        } else if (byte.class.equals(requiredType) || Byte.class.equals(requiredType)) {
-            value = rs.getByte(index);
-            wasNullCheck = true;
-        } else if (short.class.equals(requiredType) || Short.class.equals(requiredType)) {
-            value = rs.getShort(index);
+        } else if (long.class.equals(requiredType) || Long.class.equals(requiredType)) {
+            value = rs.getLong(index);
             wasNullCheck = true;
         } else if (int.class.equals(requiredType) || Integer.class.equals(requiredType)) {
             value = rs.getInt(index);
             wasNullCheck = true;
-        } else if (long.class.equals(requiredType) || Long.class.equals(requiredType)) {
-            value = rs.getLong(index);
+        }else if (short.class.equals(requiredType) || Short.class.equals(requiredType)) {
+            value = rs.getShort(index);
             wasNullCheck = true;
         } else if (float.class.equals(requiredType) || Float.class.equals(requiredType)) {
             value = rs.getFloat(index);
@@ -253,13 +247,19 @@ public class JdbcUtil {
                 || Number.class.equals(requiredType)) {
             value = rs.getDouble(index);
             wasNullCheck = true;
+        } else if (byte.class.equals(requiredType) || Byte.class.equals(requiredType)) {
+            value = rs.getByte(index);
+            wasNullCheck = true;
+        } else if (boolean.class.equals(requiredType) || Boolean.class.equals(requiredType)) {
+            value = rs.getBoolean(index);
+            wasNullCheck = true;
         } else if (byte[].class.equals(requiredType)) {
             value = rs.getBytes(index);
         } else if (java.sql.Date.class.equals(requiredType)) {
             value = rs.getDate(index);
         } else if (java.sql.Time.class.equals(requiredType)) {
             value = rs.getTime(index);
-        } else if (java.sql.Timestamp.class.equals(requiredType) || java.util.Date.class.equals(requiredType)) {
+        } else if (java.util.Date.class.equals(requiredType) || java.sql.Timestamp.class.equals(requiredType)) {
             value = rs.getTimestamp(index);
         } else if (BigDecimal.class.equals(requiredType)) {
             value = rs.getBigDecimal(index);
