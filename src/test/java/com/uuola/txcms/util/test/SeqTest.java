@@ -24,8 +24,8 @@ public class SeqTest {
         System.out.println(System.currentTimeMillis());
         System.out.println(DateUtil.parseTimeMillis("2014-11-01 12:12:12", CST_DATE_FORMAT.YYYY_MM_DD_HH_MM_SS));
         long fixedValue = 1414424012812L;
-        SequenceBuilder sb = new SequenceBuilder(fixedValue, 9);
-        for(int k=0; k<20; k++){
+        SequenceBuilder sb = new SequenceBuilder(fixedValue, 99);
+        for(int k=0; k<30; k++){
             //System.out.println(sb.getSid());
             (new DemoGet(sb)).start();
         }
@@ -44,6 +44,7 @@ class DemoGet extends Thread{
     @Override
     public void run() {
         System.out.println(seqBuilder.getSid());
+        //System.out.println(IdGenerator.INSTANCE.nextId());
     }
     
 }

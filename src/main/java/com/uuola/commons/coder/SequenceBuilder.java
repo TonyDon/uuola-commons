@@ -69,7 +69,7 @@ public class SequenceBuilder {
                 } else {
                     increase = 0;
                     TimeUnit.MILLISECONDS.sleep(16);
-                    newTimeSeeds = System.currentTimeMillis();
+                    newTimeSeeds = nextMillis(beforeTimeSeeds); //System.currentTimeMillis();
                     id = (newTimeSeeds - fixedValue) * extTimes;
                 }
             } else {
@@ -86,6 +86,14 @@ public class SequenceBuilder {
             lock.unlock();
         }
         return id;
+    }
+    
+    private long nextMillis(long lastTimestamp) {
+        long timestamp = System.currentTimeMillis();
+        while (timestamp <= lastTimestamp) {
+            timestamp = System.currentTimeMillis();
+        }
+        return timestamp;
     }
 
 }
