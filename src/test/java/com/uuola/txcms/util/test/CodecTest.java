@@ -18,6 +18,7 @@ import org.apache.commons.codec.digest.Crypt;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.IOUtils;
 
+import com.uuola.commons.coder.Md5;
 import com.uuola.commons.coder.MyBase64;
 import com.uuola.commons.coder.SHA;
 
@@ -41,8 +42,10 @@ public class CodecTest {
         
         System.out.println(Base64.encodeBase64String("test哈哈".getBytes()));
         System.out.println(new String(Base64.decodeBase64("dGVzdOWTiOWTiA==")));
-        System.out.println(MyBase64.encode("test哈哈"));
-        System.out.println(MyBase64.decode("DGVZDO1tiO1tiB=="));
+        System.out.println(MyBase64.encode("test哈哈ab123"));
+        System.out.println(MyBase64.decode("8GVB8O1tiO1tiGfiMtIB"));
+        System.out.println(MyBase64.encode(Md5.encode("1985")));
+        System.out.println(MyBase64.decode("M1yBnmM6n1QdytnkMtHkntjlOGQYOtniyBg6O08JyJk="));
         
         System.out.println(Crypt.crypt("abc"));
         
@@ -50,8 +53,8 @@ public class CodecTest {
 //            fileSHA1();
 //            fileMD5();
             //base64Image();
-            fileSHA256();
-        } catch (IOException e) {
+            //fileSHA256();
+        } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }

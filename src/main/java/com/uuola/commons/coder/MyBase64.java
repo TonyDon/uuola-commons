@@ -13,9 +13,9 @@ public class MyBase64 {
 // Mapping table from 6-bit nibbles to MyBase64 characters.
 
     private static char[] map1 = {
-        'B', 'A', 'c', '0', 'e', 'f', 'G', '7', 'I', 'j', 'K', '9', 'M', 'n', 'O', 'P', 'Q', '4', 's', 't', 'U', 'V', '1', 'X', 'y', 'z',
-        'a', 'b', 'C', 'D', 'E', 'F', 'g', 'H', 'i', 'J', 'k', 'l', 'm', 'N', 'o', 'p', 'q', 'R', 'S', 'T', 'u', 'v', 'w', '6', 'Y', 'Z',
-        'W', '3', 'd', '2', 'x', '5', 'r', '8', 'h', 'L', '@', '_'};
+        'Z', 'A', 'c', '0', '2', 'f', 'G', '7', 'I', 'j', 'K', '9', 'M', 'n', 'O', 'P', 'Q', '4', 's', 't', 'U', 'V', '1', 'X', 'y', 'z',
+        'a', 'N', 'F', '8', 'E', 'C', 'g', 'H', 'i', 'J', 'k', 'l', 'm', 'b', 'o', 'p', 'v', 'R', 'S', 'T', 'u', 'q', 'w', '6', 'W', 'B',
+        'Y', '3', 'd', 'e', 'x', '5', 'r', 'D', 'h', 'L', '@', '_'};
 // Mapping table from MyBase64 characters to 6-bit nibbles.
     private static byte[] map2 = new byte[128];
 
