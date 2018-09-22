@@ -25,6 +25,7 @@
 
 
 /target/
+
 /.settings/
 /.classpath
 /.springBeans
@@ -35,6 +36,7 @@ target/
 *.zip
 *.tar
 *.tar.gz
+
 .log
 
 # eclipse ignore
@@ -44,6 +46,15 @@ target/
 .factorypath
 .springBeans
 .pydevproject
+
+
+# eclipse ignore
+.settings/
+.project
+.classpath
+.factorypath
+.springBeans
+
 
 
 # idea ignore

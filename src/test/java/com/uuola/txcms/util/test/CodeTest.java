@@ -9,6 +9,7 @@ import com.uuola.commons.coder.DES;
 import com.uuola.commons.coder.DESede;
 import com.uuola.commons.coder.KeyGenerator;
 import com.uuola.commons.coder.Md5;
+import com.uuola.commons.coder.MyBase64;
 import com.uuola.commons.coder.SHA;
 import com.uuola.commons.constant.CST_DATE_FORMAT;
 
@@ -42,7 +43,8 @@ public class CodeTest {
         System.out.println(SHA.encode("你好"));
         System.out.println(DigestUtils.sha1Hex("你好"));
         System.out.println(DESede.encrypt("440ee0853ad1e99f962b63e459ef992d7c211722", "123456781234567812345678"));
-        System.out.println(DESede.encrypt("92429d82a41e930486c6de5ebda9602d55c39986", "123456781234567812345678"));
+        System.out.println(DESede.encrypt("d53b9f73e8d4aef5606fa77296a504e6f725945c7", "123456781234567812345678"));
+        System.out.println(MyBase64.encode("d53b9f73e8d4aef5606fa77296a504e6f725945c7"));
     }
 
 }
