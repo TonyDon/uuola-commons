@@ -51,7 +51,7 @@ public class BatchIterator<E> implements Iterator<List<E>> {
         }
         this.srcList = srcList;
         this.batchSize = (expectBatchSize % CYCLE_TAKE_NUM == 0) ? expectBatchSize
-                : ((int) (expectBatchSize / CYCLE_TAKE_NUM)) << 3;
+                : ((expectBatchSize / CYCLE_TAKE_NUM)<< 3) ;
         this.size = null == srcList ? 0 : srcList.size();
         result = new ArrayList<E>(this.batchSize);
     }
