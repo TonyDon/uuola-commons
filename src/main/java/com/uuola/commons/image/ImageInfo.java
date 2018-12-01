@@ -4,7 +4,7 @@ package com.uuola.commons.image;
 public class ImageInfo {
 
     /**
-     * jpeg , png, gif, bmp
+     * jpeg , png, gif, bmp, zip, pdf etc,.
      */
     private String formatName;
     
