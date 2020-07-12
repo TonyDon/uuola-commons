@@ -27,12 +27,12 @@ public class SequenceBuilder {
     
     private Logger log = LoggerFactory.getLogger(getClass());
 
-    private int increase = 0;
+    private int incr = 0;
     private long fixedValue;
     private long beforeTimeSeeds;
     private Lock lock = new ReentrantLock();
     private int maxExtDigit;
-    private int extTimes;
+    private int leftShiftBit;
     
     /**
      * 
@@ -44,39 +44,39 @@ public class SequenceBuilder {
         this.fixedValue = fixedValue;
         this.beforeTimeSeeds = System.currentTimeMillis();
         this.maxExtDigit = maxExtDigit;
-        if (maxExtDigit < 10) {
-            this.extTimes = 10;
-        } else if (maxExtDigit < 100) {
-            this.extTimes = 100;
-        } else if (maxExtDigit < 1000) {
-            this.extTimes = 1000;
+        if (maxExtDigit < 16) {
+            this.leftShiftBit = 4 ;
+        } else if (maxExtDigit < 256) {
+            this.leftShiftBit = 8 ;
+        } else if (maxExtDigit < 1024) {
+            this.leftShiftBit = 10 ;
         } else {
-            throw new IllegalArgumentException("maxExtDigit at 9~999 range !");
+            throw new IllegalArgumentException("maxExtDigit at 9~1023 range !");
         }
     }
     
     public long getSid() {
-        long newTimeSeeds;
         long id;
         lock.lock();
-        newTimeSeeds = System.currentTimeMillis();
+        long currTimeDiffValue = 0L;
+        long newTimeSeeds = System.currentTimeMillis();
         try {
             // 不同的线程在相同的时间内获取sid, 尝试扩展位自增
             if (newTimeSeeds == beforeTimeSeeds) {
-                if (increase < maxExtDigit) {
-                    increase++;
-                    id = (newTimeSeeds - fixedValue) * extTimes + increase;
+                if (incr < maxExtDigit) {
+                    incr++;
+                    currTimeDiffValue = (newTimeSeeds - fixedValue);
                 } else {
-                    increase = 0;
-                    TimeUnit.MILLISECONDS.sleep(16);
-                    newTimeSeeds = nextMillis(beforeTimeSeeds); //System.currentTimeMillis();
-                    id = (newTimeSeeds - fixedValue) * extTimes;
+                    incr = 0;
+                    newTimeSeeds = nextMillis(beforeTimeSeeds); 
+                    currTimeDiffValue = (newTimeSeeds - fixedValue);
                 }
             } else {
                 // 在不同的时间内获取sid, 直接使用获取的时间获取sid
-                increase = 0;
-                id = (newTimeSeeds - fixedValue) * extTimes;
+                incr = 0;
+                currTimeDiffValue = (newTimeSeeds - fixedValue);
             }
+            id = ( currTimeDiffValue << leftShiftBit ) | incr ;
             // 更新之前的更新时间种子为最新时间戳
             beforeTimeSeeds = newTimeSeeds;  
         } catch (Exception e) {

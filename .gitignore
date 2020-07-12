@@ -1,4 +1,5 @@
 /target/
+!.mvn/wrapper/maven-wrapper.jar
 
 ### STS ###
 .apt_generated
@@ -25,10 +26,10 @@
 
 
 /target/
-
 /.settings/
 /.classpath
 /.springBeans
+/.vscode/
 # maven ignore
 target/
 *.jar
@@ -36,7 +37,6 @@ target/
 *.zip
 *.tar
 *.tar.gz
-
 .log
 
 # eclipse ignore
@@ -46,15 +46,6 @@ target/
 .factorypath
 .springBeans
 .pydevproject
-
-
-# eclipse ignore
-.settings/
-.project
-.classpath
-.factorypath
-.springBeans
-
 
 
 # idea ignore

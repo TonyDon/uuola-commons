@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.uuola</groupId>
-	<version>1.0.1</version>
+	<version>1.0.2</version>
 	<name>uuola commons</name>
 	<description>uuola项目工具类</description>
 	<properties>
@@ -11,21 +11,21 @@
 		<org.slf4j.version>1.7.21</org.slf4j.version>
 		<org.apache.log4j.version>1.2.17</org.apache.log4j.version>
 		<commons-lang.version>2.6</commons-lang.version>
-		<commons-io.version>2.6</commons-io.version>
+		<commons-io.version>2.7</commons-io.version>
 		<commons-collections.version>3.2.2</commons-collections.version>
-		<commons-logging.version>1.1.3</commons-logging.version>
-		<commons-fileupload.version>1.3.2</commons-fileupload.version>
-		<commons-codec.version>1.9</commons-codec.version>
-		<com.alibaba.fastjson.version>1.2.54</com.alibaba.fastjson.version>
-		<cglib.version>3.2.4</cglib.version>
-		<asm.version>5.2</asm.version>
+		<commons-logging.version>1.2</commons-logging.version>
+		<commons-fileupload.version>1.3.3</commons-fileupload.version>
+		<commons-codec.version>1.14</commons-codec.version>
+		<com.alibaba.fastjson.version>1.2.72</com.alibaba.fastjson.version>
+		<cglib.version>3.2.12</cglib.version>
+		<asm.version>6.2.1</asm.version>
 		<javax.servlet.version>3.1.0</javax.servlet.version>
-		<javax.mail.version>1.5.0</javax.mail.version>
+		<javax.mail.version>1.6.2</javax.mail.version>
 		<javax.persistence.api.version>1.0.2</javax.persistence.api.version>
 		<junit.version>4.12</junit.version>
-		<tomcat-jdbc.version>8.0.52</tomcat-jdbc.version>
-		<httpclient.version>4.5</httpclient.version>
-		<mysql-connector-java.version>5.1.47</mysql-connector-java.version>
+		<tomcat-jdbc.version>8.5.57</tomcat-jdbc.version>
+		<httpclient.version>4.5.12</httpclient.version>
+		<mysql-connector-java.version>5.1.49</mysql-connector-java.version>
 	</properties>
 	<dependencies>
 		<dependency>
