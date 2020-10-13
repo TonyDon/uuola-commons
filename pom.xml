@@ -22,7 +22,7 @@
 		<javax.servlet.version>3.1.0</javax.servlet.version>
 		<javax.mail.version>1.6.2</javax.mail.version>
 		<javax.persistence.api.version>1.0.2</javax.persistence.api.version>
-		<junit.version>4.12</junit.version>
+		<junit.version>4.13.1</junit.version>
 		<tomcat-jdbc.version>8.5.57</tomcat-jdbc.version>
 		<httpclient.version>4.5.12</httpclient.version>
 		<mysql-connector-java.version>5.1.49</mysql-connector-java.version>
